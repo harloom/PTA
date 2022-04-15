@@ -1,0 +1,65 @@
+
+//model users
+{
+  "role" : "admin",
+  "nama" : "Drs. H. Ibrahim Kardi, S.H., M.Hum.",
+  "nip" : "1212313131 3123131", // uniqued
+  "foto" : "url firebase storage",
+  "noHandphone" : "0823113123",
+  "password" : "string123",
+  "username" : "1212313131d", // uniqued
+  "golongan" : "Pembina Utama/ IV/e",
+  "jabatan" : "Ketua Pengadilan Tinggi Agama Bandar Lampung",
+  "masaKerja" : 10, // bulanan
+  "jumlahMaximalCutiPertahun" : 12,
+  "atasan" : "nip atasan",
+
+}
+
+// data maxima; cuti berdasarkan collection tanggal/bulan/tahun sebagai uniqued key untuk spiner
+{
+  "id" : "12/10/2022",
+  "jumlah_orang_yang cuti" : 4,
+  "bulan" : "10",
+  "tanggal" : "1",
+  "tahun" : "2022"
+}
+
+
+//setting
+{
+  "maksimalCutiHarian" : 10
+}
+
+//setting hari libur nasional dan libur pagawai
+{
+  "tgl" : "",
+  "bulan" :" ",
+  "tahun" : "",
+  "alasan" : ""
+}
+
+
+
+//document-cuti
+{
+  "alamat" : "",
+  "alasan"" : "",
+  "nipPengaju" : "",
+  "jumlahCutiHari" : 1,
+  "status" : "",
+  "validasiAtasan" : true,
+  "validasiKepagawaian" : true,
+  "validasiPejabat" : true,
+  "alasanStatusValidasi" : ""
+  "list_tgl" : [
+    ""
+  ],
+  "nipProsesPerubahan" : "",
+  "tahun" : "",
+  "bulan" : "",
+  "urgent" : false
+
+}
+
+//

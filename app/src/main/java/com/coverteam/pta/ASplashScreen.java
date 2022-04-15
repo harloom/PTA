@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class a_splash extends AppCompatActivity {
+public class ASplashScreen extends AppCompatActivity {
 
     String USERNAME_KEY = "usernamekey";
     String username_key = "";
@@ -42,7 +42,7 @@ public class a_splash extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent gogetstarted = new Intent(a_splash.this, b_started.class);
+                    Intent gogetstarted = new Intent(ASplashScreen.this, b_started.class);
                     startActivity(gogetstarted);
                     finish();
                 }
@@ -53,7 +53,7 @@ public class a_splash extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent gohome = new Intent(a_splash.this, d_menuUtama.class);
+                    Intent gohome = new Intent(ASplashScreen.this, d_menuUtama.class);
                     startActivity(gohome);
                     finish();
                 }

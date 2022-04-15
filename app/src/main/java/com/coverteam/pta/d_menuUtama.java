@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coverteam.pta.views.UsersListActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +50,8 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
         findViewById(R.id.agenda1).setOnClickListener(this);
         findViewById(R.id.agenda2).setOnClickListener(this);
 
+        findViewById(R.id.icon_add_user).setOnClickListener(this);
+
         nama = findViewById(R.id.namamenu);
         nip = findViewById(R.id.nipmenu);
         progressBar = findViewById(R.id.progressbar);
@@ -79,6 +82,11 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
     @SuppressLint("NonConstantResourceId")
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.icon_add_user:
+                Intent goManagementUser = new Intent(d_menuUtama.this, UsersListActivity.class);
+                startActivity(goManagementUser);
+                break;
+
             case R.id.ikon_cuti:
                 Intent gocuti = new Intent(d_menuUtama.this, e_FormCuti.class);
                 startActivity(gocuti);
