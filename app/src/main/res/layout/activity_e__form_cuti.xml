@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgPrimary"
-    tools:context=".e_FormCuti">
+    tools:context=".views.from_cuti.FromCutiView">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -105,20 +105,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="MissingConstraints" />
 
-                    <!--ImageView
-                        android:id="@+id/image_profil"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:src="@drawable/icon_nopic"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="MissingConstraints" /-->
+
                     <com.github.florent37.shapeofview.shapes.CircleView
                         android:id="@+id/circlefoto"
                         android:layout_width="100dp"
@@ -277,29 +264,21 @@
                     android:layout_marginBottom="24dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:fontFamily="@font/mlight"
-                        android:text="Alasan Cuti"
-                        android:textColor="@color/grayPrmary"
-                        android:textSize="20sp" />
-
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:id="@+id/in_alasan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_input_edit"
-                        android:fontFamily="@font/mmedium"
-                        android:lines="3"
-                        android:paddingLeft="12dp"
-                        android:textColor="@color/blackSecondary" />
+                        android:hint="@string/in_alasan">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
                 --------------------alamat cuti
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -308,29 +287,23 @@
                     android:layout_marginBottom="24dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:fontFamily="@font/mlight"
-                        android:text="Alamat Selama Cuti"
-                        android:textColor="@color/grayPrmary"
-                        android:textSize="20sp" />
-
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:id="@+id/in_alamat"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_input_edit"
-                        android:fontFamily="@font/mmedium"
-                        android:lines="3"
-                        android:paddingLeft="12dp"
-                        android:textColor="@color/blackSecondary" />
+                        android:hint="@string/in_alamat">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
                 --------------------nomor hp
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -339,99 +312,101 @@
                     android:layout_marginBottom="24dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:fontFamily="@font/mlight"
-                        android:text="No HP"
-                        android:textColor="@color/grayPrmary"
-                        android:textSize="20sp" />
-
-
-
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:id="@+id/in_NoHP"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/bg_input_edit"
-                        android:fontFamily="@font/mmedium"
-                        android:inputType="number"
-                        android:maxLength="12"
-                        android:lines="1"
-                        android:paddingLeft="12dp"
-                        android:textColor="@color/blackSecondary" />
+                        android:layout_height="wrap_content"
+                        android:hint="@string/input_no_handphone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:inputType="phone"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
+
 
                 --------------------tanggal mulai
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/button_pilih_tanngal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:orientation="vertical">
+                    android:text="Pilih Tanggal Cuti"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="15dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:fontFamily="@font/mlight"
-                        android:text="Tanggal Cuti Mulai"
-                        android:textColor="@color/grayPrmary"
-                        android:textSize="20sp" />
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="24dp"-->
+<!--                    android:layout_marginRight="24dp"-->
+<!--                    android:layout_marginBottom="24dp"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="12dp"-->
+<!--                        android:fontFamily="@font/mlight"-->
+<!--                        android:text="Tanggal Cuti Mulai"-->
+<!--                        android:textColor="@color/grayPrmary"-->
+<!--                        android:textSize="20sp" />-->
 
 
 
-                    <EditText
-                        android:id="@+id/in_mulai"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/bg_input_edit"
-                        android:fontFamily="@font/mmedium"
-                        android:inputType="date"
-                        android:lines="1"
-                        android:paddingLeft="12dp"
-                        android:textColor="@color/blackSecondary"
-                        android:focusable="false"/>
+<!--                    <EditText-->
+<!--                        android:id="@+id/in_mulai"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="50dp"-->
+<!--                        android:background="@drawable/bg_input_edit"-->
+<!--                        android:fontFamily="@font/mmedium"-->
+<!--                        android:inputType="date"-->
+<!--                        android:lines="1"-->
+<!--                        android:paddingLeft="12dp"-->
+<!--                        android:textColor="@color/blackSecondary"-->
+<!--                        android:focusable="false"/>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-                --------------------tanggal selesai
+<!--                &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;tanggal selesai-->
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginBottom="24dp"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="24dp"-->
+<!--                    android:layout_marginRight="24dp"-->
+<!--                    android:layout_marginBottom="24dp"-->
+<!--                    android:orientation="vertical">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:fontFamily="@font/mlight"
-                        android:text="Tanggal Cuti Selesai"
-                        android:textColor="@color/grayPrmary"
-                        android:textSize="20sp" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="12dp"-->
+<!--                        android:fontFamily="@font/mlight"-->
+<!--                        android:text="Tanggal Cuti Selesai"-->
+<!--                        android:textColor="@color/grayPrmary"-->
+<!--                        android:textSize="20sp" />-->
 
-                    <EditText
-                        android:id="@+id/in_selesai"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/bg_input_edit"
-                        android:fontFamily="@font/mmedium"
-                        android:inputType="date"
-                        android:lines="1"
-                        android:paddingLeft="12dp"
-                        android:textColor="@color/blackSecondary"
-                        android:focusable="false"/>
+<!--                    <EditText-->
+<!--                        android:id="@+id/in_selesai"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="50dp"-->
+<!--                        android:background="@drawable/bg_input_edit"-->
+<!--                        android:fontFamily="@font/mmedium"-->
+<!--                        android:inputType="date"-->
+<!--                        android:lines="1"-->
+<!--                        android:paddingLeft="12dp"-->
+<!--                        android:textColor="@color/blackSecondary"-->
+<!--                        android:focusable="false"/>-->
 
-                </LinearLayout>
-                --------------------JUMLAH BUALAN
+<!--                </LinearLayout>-->
+<!--                &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;JUMLAH BUALAN-->
 
                 --------------------jumlah hari
 
@@ -441,29 +416,22 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginRight="24dp"
                     android:layout_marginBottom="24dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
 
-                        <LinearLayout
-                            android:layout_width="160dp"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="12dp"
-                                android:fontFamily="@font/mlight"
-                                android:text="Jumlah Hari "
-                                android:textColor="@color/grayPrmary"
-                                android:textSize="20sp" />
-
-                        </LinearLayout>
+                            android:layout_marginBottom="12dp"
+                            android:fontFamily="@font/mlight"
+                            android:text="Jumlah Hari"
+                            android:textColor="@color/grayPrmary"
+                            android:textSize="18sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -473,9 +441,11 @@
 
                             <Button
                                 android:id="@+id/btnmin"
-                                android:layout_width="25dp"
-                                android:layout_height="35dp"
-                                android:background="@drawable/btnmines"
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textSize="18sp"
+                                android:textColor="#fff"
                                 android:enabled="false"/>
 
 
@@ -492,9 +462,11 @@
 
                             <Button
                                 android:id="@+id/btnplus"
-                                android:layout_width="25dp"
-                                android:layout_height="28dp"
-                                android:background="@drawable/btnpls" />
+                                android:layout_width="50dp"
+                                android:layout_height="wrap_content"
+                                android:textColor="#fff"
+                                android:textSize="18sp"
+                                android:text="+" />
 
 
                         </LinearLayout>

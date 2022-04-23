@@ -14,7 +14,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.coverteam.pta.views.UsersListActivity;
+import com.coverteam.pta.views.created_users.UsersListActivity;
+import com.coverteam.pta.views.from_cuti.CalenderPicker;
+import com.coverteam.pta.views.from_cuti.FromCutiView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,6 +77,16 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
             lnr_validasi.setVisibility(View.VISIBLE);
         }
 
+        //test
+//        ImageView imageViewTitle = findViewById(R.id.imageView4);
+//        imageViewTitle.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent go = new Intent(d_menuUtama.this, CalenderPicker.class);
+//                startActivity(go);
+//            }
+//        });
+
 
         getInformationFromDB();
         getAgendaNew();
@@ -88,7 +100,7 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
                 break;
 
             case R.id.ikon_cuti:
-                Intent gocuti = new Intent(d_menuUtama.this, e_FormCuti.class);
+                Intent gocuti = new Intent(d_menuUtama.this, FromCutiView.class);
                 startActivity(gocuti);
                 break;
             case R.id.ikon_profil:

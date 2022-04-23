@@ -1,4 +1,4 @@
-package com.coverteam.pta;
+package com.coverteam.pta.views.from_cuti;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,32 +11,36 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coverteam.pta.R;
+import com.coverteam.pta.d_menuUtama;
+import com.coverteam.pta.g_pengajuan_terkirim;
 import com.coverteam.pta.model.DataCuti;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.savvi.rangedatepicker.CalendarPickerView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-public class e_FormCuti extends AppCompatActivity implements View.OnClickListener{
+public class FromCutiView extends AppCompatActivity implements View.OnClickListener{
 
     LinearLayout btn_back,ln_notice;
     Button btn_min,btn_plus,btn_lanjut;
@@ -50,13 +54,18 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
     String USERNAME_KEY = "usernamekey";
     String username_key = "";
     String username_key_new = "";
+
     String username;
+
     DatabaseReference reference;
     TextView in_nama,in_nip,in_jabatan,in_sisa;
     ProgressBar progressBar,progressBar0;
-    private DatePickerDialog datePickerDialog;
-    private SimpleDateFormat dateFormatter;
-    EditText in_mulai,in_selesai,in_alasan,in_alamat,in_noHP;
+
+//    private DatePickerDialog datePickerDialog;
+//    private SimpleDateFormat dateFormatter;
+
+//    EditText in_mulai,in_selesai,in_alasan,in_alamat,in_noHP;
+    EditText in_alasan,in_alamat,in_noHP;
     String idcuti;
     String masuknama,masukjabatan,masuknip;
 
@@ -66,7 +75,7 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_e__form_cuti);
 
         getUsernameLocal();
-        dateFormatter = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+//        dateFormatter = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
 
         in_nama = findViewById(R.id.in_nama);
         in_nip = findViewById(R.id.in_nip);
@@ -74,19 +83,28 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
         in_sisa = findViewById(R.id.in_sisa);
         progressBar = findViewById(R.id.progressbar);
         progressBar0 = findViewById(R.id.progressbar0);
-        in_mulai = findViewById(R.id.in_mulai);
-        in_selesai = findViewById(R.id.in_selesai);
-        in_alasan = findViewById(R.id.in_alasan);
-        in_alamat = findViewById(R.id.in_alamat);
-        in_noHP = findViewById(R.id.in_NoHP);
+//        in_mulai = findViewById(R.id.in_mulai);
+//        in_selesai = findViewById(R.id.in_selesai);
+
+        TextInputLayout layout_alasan = findViewById(R.id.in_alasan);
+        in_alasan = layout_alasan.getEditText();
+
+        TextInputLayout layout_alamat =findViewById(R.id.in_alamat);
+        in_alamat = layout_alamat.getEditText();
+
+        TextInputLayout layoutNoHP =findViewById(R.id.in_NoHP);
+        in_noHP = layoutNoHP.getEditText();
+
         foto = findViewById(R.id.fotouser);
 
-        findViewById(R.id.in_mulai).setOnClickListener(this);
-        findViewById(R.id.in_selesai).setOnClickListener(this);
+//        findViewById(R.id.in_mulai).setOnClickListener(this);
+//        findViewById(R.id.in_selesai).setOnClickListener(this);
         findViewById(R.id.btnplus).setOnClickListener(this);
         findViewById(R.id.btnmin).setOnClickListener(this);
         findViewById(R.id.button_back).setOnClickListener(this);
         findViewById(R.id.button_lanjut).setOnClickListener(this);
+
+        findViewById(R.id.button_pilih_tanngal).setOnClickListener(this);
         btn_min = findViewById(R.id.btnmin);
         btn_plus = findViewById(R.id.btnplus);
         btn_lanjut = findViewById(R.id.button_lanjut);
@@ -95,6 +113,8 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
         btn_min.animate().alpha(0).setDuration(300).start();
 
         getInformationFromDB();
+
+
     }
 
     private void checkCutiUser() {
@@ -106,14 +126,23 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    private  void onGetDateCuti(){
+                Intent go = new Intent(FromCutiView.this, CalenderPicker.class);
+                startActivity(go);
+    }
+
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.in_mulai:
-                showDatePicker();
-                break;
-            case R.id.in_selesai:
-                showDatePicker2();
+//            case R.id.in_mulai:
+//                showDatePicker();
+//                break;
+//            case R.id.in_selesai:
+//                showDatePicker2();
+//                break;
+
+            case R.id.button_pilih_tanngal:
+                onGetDateCuti();
                 break;
             case R.id.btnplus:
                 nilaijum_hari+=1;
@@ -144,7 +173,7 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
                 }
                 break;
             case R.id.button_back:
-                Intent gomenu = new Intent(e_FormCuti.this, d_menuUtama.class);
+                Intent gomenu = new Intent(FromCutiView.this, d_menuUtama.class);
                 startActivity(gomenu);
                 break;
             case R.id.button_lanjut:
@@ -157,38 +186,39 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
         String alasancuti = in_alasan.getText().toString();
         String alamatcuti = in_alamat.getText().toString();
         String nohpcuti = in_noHP.getText().toString();
-        String tglmulaicuti = in_mulai.getText().toString();
-        String tglselesaicuti = in_selesai.getText().toString();
+//        String tglmulaicuti = in_mulai.getText().toString();
+//        String tglselesaicuti = in_selesai.getText().toString();
         String tolakalasan = "";
         String suratcuti = "";
         masuknama = in_nama.getText().toString();
         masuknip = in_nip.getText().toString();
         masukjabatan = in_jabatan.getText().toString();
-        //masuksisa = Integer.valueOf(in_sisa.getText().toString());
         jumhari = Integer.valueOf(txjum_hari.getText().toString());
         String cutistatus = "cekpegawai";
-        if(validateInputs(alasancuti,alamatcuti,nohpcuti,tglmulaicuti,tglselesaicuti)){
-            progressBar.setVisibility(View.VISIBLE);
-            reference = FirebaseDatabase.getInstance().getReference("Pengajuan_Cuti");
-            idcuti = reference.push().getKey();
-            DataCuti cuti = new DataCuti(idcuti,masuknama,masuknip,masukjabatan,alasancuti,alamatcuti,nohpcuti,tglmulaicuti,tglselesaicuti,cutistatus,tolakalasan,suratcuti,username,jumhari);
-            reference.child(idcuti).setValue(cuti);
-            saveCutiUser();
+//        if(validateInputs(alasancuti,alamatcuti,nohpcuti,tglmulaicuti,tglselesaicuti)){
+//            progressBar.setVisibility(View.VISIBLE);
+//            reference = FirebaseDatabase.getInstance().getReference("Pengajuan_Cuti");
+//            idcuti = reference.push().getKey();
+//            DataCuti cuti = new DataCuti(idcuti,masuknama,masuknip,masukjabatan,alasancuti,alamatcuti,nohpcuti,tglmulaicuti,tglselesaicuti,cutistatus,tolakalasan,suratcuti,username,jumhari);
+//            reference.child(idcuti).setValue(cuti);
+//            saveCutiUser();
+//
+//            Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    progressBar.setVisibility(View.GONE);
+//                    Intent intent = new Intent(FromCutiView.this, g_pengajuan_terkirim.class);
+//                    intent.putExtra("cutiid",idcuti);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            },3000);
+//
+//        }
 
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.setVisibility(View.GONE);
-                    Intent intent = new Intent(e_FormCuti.this, g_pengajuan_terkirim.class);
-                    intent.putExtra("cutiid",idcuti);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-            },3000);
 
-        }
     }
 
     private boolean validateInputs(String alasanct,String alamatct,String nohpct,String tglmulai,String tglselesai){
@@ -208,11 +238,11 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
             return false;
         }
         if (tglmulai.isEmpty()){
-            in_mulai.setError("Tanggal Mulai Cuti Belum Diisi");
+//            in_mulai.setError("Tanggal Mulai Cuti Belum Diisi");
             return false;
         }
         if (tglselesai.isEmpty()){
-            in_selesai.setError("Tanggal Selesai Cuti Belum Diisi");
+//            in_selesai.setError("Tanggal Selesai Cuti Belum Diisi");
             return false;
         }
         return true;
@@ -240,34 +270,34 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
         });
     }
 
-    private void showDatePicker(){
-        Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                in_mulai.setText(dateFormatter.format(newDate.getTime()));
-            }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
-    }
-    private void showDatePicker2(){
-        Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                in_selesai.setText(dateFormatter.format(newDate.getTime()));
-            }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.show();
-    }
+//    private void showDatePicker(){
+//        Calendar newCalendar = Calendar.getInstance();
+//        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                Calendar newDate = Calendar.getInstance();
+//                newDate.set(year, monthOfYear, dayOfMonth);
+//                in_mulai.setText(dateFormatter.format(newDate.getTime()));
+//            }
+//
+//        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+//        datePickerDialog.show();
+//    }
+//    private void showDatePicker2(){
+//        Calendar newCalendar = Calendar.getInstance();
+//        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                Calendar newDate = Calendar.getInstance();
+//                newDate.set(year, monthOfYear, dayOfMonth);
+//                in_selesai.setText(dateFormatter.format(newDate.getTime()));
+//            }
+//
+//        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+//        datePickerDialog.show();
+//    }
 
     private void getInformationFromDB() {
         reference = FirebaseDatabase.getInstance().getReference()
@@ -282,7 +312,7 @@ public class e_FormCuti extends AppCompatActivity implements View.OnClickListene
                 username = dataSnapshot.child("USERNAME").getValue().toString();
                 nilai_sisa_cuti = Integer.valueOf(in_sisa.getText().toString());
                 checkCutiUser();
-                Picasso.with(e_FormCuti.this)
+                Picasso.with(FromCutiView.this)
                         .load(dataSnapshot.child("FOTO").getValue().toString())
                         .into(foto, new Callback() {
                             @Override

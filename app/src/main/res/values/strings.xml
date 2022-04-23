@@ -9,6 +9,22 @@
     <string name="Alamat_label">Alamat</string>
     <string name="username">Username</string>
     <string name="users">Pengguna</string>
+    <string name="input_name">Nama</string>
+    <string name="input_nip">NIP</string>
+    <string name="input_role">Role</string>
+    <string name="input_no_handphone">Nomer Handphone</string>
+    <string name="input_golongan">Golongan</string>
+    <string name="input_jabatan">Jabatan</string>
+    <string name="input_masa_kerja">Masa Kerja (Bulan)</string>
+    <string name="input_max_cuti">Maximun Cuti</string>
+    <string name="input_atasan">Atasan</string>
+    <string name="input_username">Username</string>
+    <string name="input_password">Password</string>
+    <string name="simpan">Simpan</string>
+    <string name="pendaftaran_akun">Daftar Akun</string>
+    <string name="in_alasan">Alasan</string>
+    <string name="in_alamat">Alamat</string>
+    <string name="pilih_tanggal_cuti">Pilih Tanggal</string>
 
 
     <string-array name="bulan_mulai">

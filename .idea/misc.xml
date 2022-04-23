@@ -12,8 +12,9 @@
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_a_splash.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_b_started.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_c_login.xml" value="0.21829710144927536" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_calender_picker.xml" value="0.24048913043478262" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_d_menu_utama.xml" value="0.176" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_e__form_cuti.xml" value="0.21829710144927536" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_e__form_cuti.xml" value="0.2588297311544544" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_f_profil.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_g_pengajuan_terkirim.xml" value="0.6" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_h_panduan.xml" value="0.21829710144927536" />
@@ -22,10 +23,12 @@
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_k_list_valid.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_l_agenda.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_main.xml" value="0.21829710144927536" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_users_create.xml" value="0.21829710144927536" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_users_list.xml" value="0.33" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_users_create.xml" value="0.1" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_users_list.xml" value="0.152" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/desain_list_cuti.xml" value="0.21829710144927536" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/desain_list_users.xml" value="0.24048913043478262" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/desain_panduan_detail.xml" value="0.21829710144927536" />
+        <entry key="..\:/Project/PTA/app/src/main/res/menu/menu_save.xml" value="0.13125" />
         <entry key="..\:/Project/PTA/app/src/main/res/menu/menu_users_toolbar.xml" value="0.2557291666666667" />
       </map>
     </option>

@@ -11,9 +11,25 @@ public class Users {
     private String username;
     private String golongan;
     private String jabatan;
-    private Long masaKerja;
-    private Long jumlahMaximalCutiPertahun;
+    private Integer masaKerja;
+    private Integer jumlahMaximalCutiPertahun;
     private String atasan;
+
+
+    public Users(String role, String nama, String nip, String foto, String noHandphone, String password, String username, String golongan, String jabatan, Integer masaKerja, Integer jumlahMaximalCutiPertahun, String atasan) {
+        this.role = role;
+        this.nama = nama;
+        this.nip = nip;
+        this.foto = foto;
+        this.noHandphone = noHandphone;
+        this.password = password;
+        this.username = username;
+        this.golongan = golongan;
+        this.jabatan = jabatan;
+        this.masaKerja = masaKerja;
+        this.jumlahMaximalCutiPertahun = jumlahMaximalCutiPertahun;
+        this.atasan = atasan;
+    }
 
     public String getRole() { return role; }
     public void setRole(String value) { this.role = value; }
@@ -42,11 +58,11 @@ public class Users {
     public String getJabatan() { return jabatan; }
     public void setJabatan(String value) { this.jabatan = value; }
 
-    public Long getMasaKerja() { return masaKerja; }
-    public void setMasaKerja(Long value) { this.masaKerja = value; }
+    public Integer getMasaKerja() { return masaKerja; }
+    public void setMasaKerja(Integer value) { this.masaKerja = value; }
 
-    public Long getJumlahMaximalCutiPertahun() { return jumlahMaximalCutiPertahun; }
-    public void setJumlahMaximalCutiPertahun(Long value) { this.jumlahMaximalCutiPertahun = value; }
+    public Integer getJumlahMaximalCutiPertahun() { return jumlahMaximalCutiPertahun; }
+    public void setJumlahMaximalCutiPertahun(Integer value) { this.jumlahMaximalCutiPertahun = value; }
 
     public String getAtasan() { return atasan; }
     public void setAtasan(String value) { this.atasan = value; }

@@ -13,10 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".views.UsersListActivity"
+            android:name=".views.from_cuti.CalenderPicker"
             android:exported="true" />
         <activity
-            android:name=".views.UsersCreateActivity"
+            android:name=".views.created_users.UsersListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".views.created_users.UsersCreateActivity"
             android:exported="true" />
         <activity android:name=".l_agenda" />
         <activity android:name=".k_list_valid" />
@@ -25,7 +28,7 @@
         <activity android:name=".h_panduan" />
         <activity android:name=".g_pengajuan_terkirim" />
         <activity android:name=".f_profil" />
-        <activity android:name=".e_FormCuti" />
+        <activity android:name=".views.from_cuti.FromCutiView" />
         <activity android:name=".d_menuUtama" />
         <activity android:name=".c_login" />
         <activity android:name=".b_started" />
