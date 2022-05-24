@@ -3,17 +3,22 @@ package com.coverteam.pta.data.repositorys;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.coverteam.pta.data.models.Users;
+import com.coverteam.pta.data.providers.BaseCallback;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Transaction;
 
-public class UsersRepositoryImp<Users extends   Identifiable<String>> implements UsersRepository<Users, String>
+public class UsersRepositoryImp implements UsersRepository
 {
     private static final String TAG = "UsersRepositoryImp";
 
@@ -21,7 +26,7 @@ public class UsersRepositoryImp<Users extends   Identifiable<String>> implements
 
     private final CollectionReference collectionReference;
     private final String collectionName;
-
+    private  FirebaseFirestore db;
 
     /**
      * Initializes the repository storing the data in the given collection. Should be from {FirestoreCollections}.
@@ -30,8 +35,13 @@ public class UsersRepositoryImp<Users extends   Identifiable<String>> implements
         this.collectionName = collectionName;
         this.usersClass = usersClass;
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        this.db = FirebaseFirestore.getInstance();
         this.collectionReference = db.collection(this.collectionName);
+    }
+
+    @Override
+    public CollectionReference documentCollection(){
+        return this.collectionReference;
     }
 
 
@@ -70,21 +80,21 @@ public class UsersRepositoryImp<Users extends   Identifiable<String>> implements
     }
 
     @Override
-    public Task<Void> create(Users entity) {
-        final String documentName = entity.getEntityKey();
+    public Task<Void> create(Users entity,String documentName,BaseCallback callback) {
         DocumentReference documentReference = collectionReference.document(documentName);
         Log.i(TAG, "Creating '" + documentName + "' in '" + collectionName + "'.");
         return documentReference.set(entity).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "There was an error creating '" + documentName + "' in '" + collectionName + "'!", e);
+                callback.onResponseCreated(e.toString(),null);
             }
         });
     }
 
     @Override
-    public Task<Void> update(Users entity) {
-        final String documentName = entity.getEntityKey();
+    public Task<Void> update(Users entity, BaseCallback callback) {
+        final String documentName = entity.getNip();
         DocumentReference documentReference = collectionReference.document(documentName);
         Log.i(TAG, "Updating '" + documentName + "' in '" + collectionName + "'.");
 
@@ -97,7 +107,7 @@ public class UsersRepositoryImp<Users extends   Identifiable<String>> implements
     }
 
     @Override
-    public Task<Void> delete(String id) {
+    public Task<Void> delete(String id,BaseCallback callback) {
 
         // not fitur
         return null;

@@ -5,16 +5,18 @@ public class FirestoreCollectionName {
     //name table
 
     //users
-     final static   String USERS = "users";
+     public static   String USERS = "users";
 
      // holiday
-     final static   String HOLIDAY = "holidays";
+     public static   String HOLIDAY = "holidays";
 
      //information date
-     final static   String INFORMATION_DATE = "information_date";
+     public static   String INFORMATION_DATE = "information_date";
 
      // document cuti
 
-    final static   String DOCUMENT_CUTI = "document_cuti";
+    public static   String DOCUMENT_CUTI = "document_cuti";
+
+    public static  String TANGGAL_CUTI = "tanggal_cuti";
 
 }

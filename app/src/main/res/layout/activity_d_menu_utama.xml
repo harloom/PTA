@@ -327,7 +327,7 @@
 
                     //icon user
                     <LinearLayout
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:id="@+id/icon_add_user"
                         android:orientation="vertical"
                         android:layout_weight="1"

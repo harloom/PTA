@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".g_pengajuan_terkirim">
+    tools:context=".views.riwayat_cuti.DetailPengajuanView">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -210,6 +210,43 @@
                     />
 
                 <TextView
+                    android:id="@+id/Lbl_type_alasan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mlight"
+                    android:text="Tipe Cuti"
+                    android:textColor="@color/grayPrmary"
+                    android:textSize="16sp"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toTopOf="@+id/in_jabatan"
+                    />
+
+
+                <TextView
+                    android:id="@+id/pentingVaribale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mlight"
+                    android:textColor="@color/red"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/Lbl_type_alasan"
+                    app:layout_constraintTop_toBottomOf="@+id/Lbl_jabatan" />
+
+                <TextView
+                    android:id="@+id/in_type_alasan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/mlight"
+                    android:text=""
+                    android:textColor="@color/blackSecondary"
+                    android:textSize="16sp"
+                    android:layout_marginTop="25dp"
+                    app:layout_constraintTop_toTopOf="@+id/Lbl_type_alasan"
+                    />
+                <TextView
                     android:id="@+id/Lbl_alasan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -218,7 +255,7 @@
                     android:textColor="@color/grayPrmary"
                     android:textSize="16sp"
                     android:layout_marginTop="30dp"
-                    app:layout_constraintTop_toTopOf="@+id/in_jabatan"
+                    app:layout_constraintTop_toTopOf="@+id/in_type_alasan"
                     />
 
                 <TextView
@@ -232,6 +269,9 @@
                     android:layout_marginTop="25dp"
                     app:layout_constraintTop_toTopOf="@+id/Lbl_alasan"
                     />
+
+
+
                 --------------------sisa cuti
 
                 <TextView
@@ -312,15 +352,12 @@
                     android:layout_marginTop="25dp"
                     app:layout_constraintTop_toTopOf="@+id/Lbl_hp"
                     />
-
-                --------------------tgl mulai
-
                 <TextView
-                    android:id="@+id/Lbl_tgl_mulai"
+                    android:id="@+id/tx_tgl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/mlight"
-                    android:text="Tanggal Mulai Cuti"
+                    android:text="Tanggal : "
                     android:textColor="@color/grayPrmary"
                     android:textSize="16sp"
                     android:layout_marginTop="30dp"
@@ -328,44 +365,64 @@
 
                     />
 
-                <TextView
-                    android:id="@+id/in_tgl_mulai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mlight"
-                    android:text=""
-                    android:textColor="@color/blackSecondary"
-                    android:textSize="16sp"
-                    android:layout_marginTop="25dp"
-                    app:layout_constraintTop_toTopOf="@+id/Lbl_tgl_mulai"
-                    />
-
-                --------------------tgl selesai
-
-                <TextView
-                    android:id="@+id/Lbl_tgl_selesai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mlight"
-                    android:text="Tanggal Selesai Cuti"
-                    android:textColor="@color/grayPrmary"
-                    android:textSize="16sp"
+                <ListView
+                    android:id="@+id/listDateSelected"
+                    android:layout_width="match_parent"
                     android:layout_marginTop="30dp"
-                    app:layout_constraintTop_toTopOf="@+id/in_tgl_mulai"
+                    app:layout_constraintTop_toTopOf="@+id/tx_tgl"
+                    android:layout_height="fill_parent"/>
 
-                    />
+<!--                <TextView-->
+<!--                    android:id="@+id/Lbl_tgl_mulai"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/mlight"-->
+<!--                    android:text="Tanggal Mulai Cuti"-->
+<!--                    android:textColor="@color/grayPrmary"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/in_hp"-->
 
-                <TextView
-                    android:id="@+id/in_tgl_selesai"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/mlight"
-                    android:text=""
-                    android:textColor="@color/blackSecondary"
-                    android:textSize="16sp"
-                    android:layout_marginTop="25dp"
-                    app:layout_constraintTop_toTopOf="@+id/Lbl_tgl_selesai"
-                    />
+<!--                    />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/in_tgl_mulai"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/mlight"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/blackSecondary"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:layout_marginTop="25dp"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/Lbl_tgl_mulai"-->
+<!--                    />-->
+
+<!--                &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;tgl selesai-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/Lbl_tgl_selesai"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/mlight"-->
+<!--                    android:text="Tanggal Selesai Cuti"-->
+<!--                    android:textColor="@color/grayPrmary"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/in_tgl_mulai"-->
+
+<!--                    />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/in_tgl_selesai"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/mlight"-->
+<!--                    android:text=""-->
+<!--                    android:textColor="@color/blackSecondary"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:layout_marginTop="25dp"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/Lbl_tgl_selesai"-->
+<!--                    />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
@@ -514,7 +571,7 @@
                 android:visibility="gone"
                 android:id="@+id/download"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
@@ -522,7 +579,7 @@
                 android:fontFamily="@font/mmedium"
                 android:text="DOWNLOAD SURAT CUTI"
                 android:textColor="#fff"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"

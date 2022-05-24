@@ -1,7 +1,14 @@
 package com.coverteam.pta.data.models;
 
 
-public class Users {
+import com.coverteam.pta.data.repositorys.Identifiable;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.ServerTimestamp;
+import com.google.type.Date;
+
+
+public class Users  {
     private String role;
     private String nama;
     private String nip;
@@ -14,9 +21,16 @@ public class Users {
     private Integer masaKerja;
     private Integer jumlahMaximalCutiPertahun;
     private String atasan;
+    @ServerTimestamp
+    private Timestamp timeStamp;
 
 
-    public Users(String role, String nama, String nip, String foto, String noHandphone, String password, String username, String golongan, String jabatan, Integer masaKerja, Integer jumlahMaximalCutiPertahun, String atasan) {
+    public  Users(){
+
+    }
+
+    public Users(String role, String nama, String nip, String foto,
+                 String noHandphone, String password, String username, String golongan, String jabatan, Integer masaKerja, Integer jumlahMaximalCutiPertahun, String atasan) {
         this.role = role;
         this.nama = nama;
         this.nip = nip;
@@ -66,4 +80,12 @@ public class Users {
 
     public String getAtasan() { return atasan; }
     public void setAtasan(String value) { this.atasan = value; }
+
+    public Timestamp getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Timestamp timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 }

@@ -45,6 +45,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
+            <TextView
+                android:id="@+id/sisa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info" />
+
             <com.savvi.rangedatepicker.CalendarPickerView
                 android:id="@+id/calendar_view"
                 android:layout_width="match_parent"
@@ -57,7 +66,7 @@
                 android:scrollbarStyle="outsideOverlay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/info"
+                app:layout_constraintTop_toBottomOf="@id/sisa"
                 app:tsquare_dividerColor="@color/transparent"
                 app:tsquare_headerTextColor="@color/custom_header_text"
                 app:tsquare_orientation_horizontal="false" />

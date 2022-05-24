@@ -1,6 +1,7 @@
 package com.coverteam.pta.views.created_users;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,9 +19,19 @@ import android.view.MenuItem;
 import com.coverteam.pta.R;
 import com.coverteam.pta.data.models.Role;
 import com.coverteam.pta.data.models.Users;
+import com.coverteam.pta.data.providers.FirestoreCollectionName;
+import com.coverteam.pta.data.repositorys.UsersRepository;
+import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
 import com.coverteam.pta.tools.Tools;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UsersListActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -64,42 +76,35 @@ public class UsersListActivity extends AppCompatActivity {
         //example list users
 
         ArrayList<Users> users = new ArrayList<>();
-
-        Users ilham = new Users(
-                Role.ADMIN,
-                "Ilham",
-                "1231313213",
-                "",
-                "08213131313213",
-                "12345678",
-                "admin_ilham",
-                "1",
-                "Admin IT",
-                12,
-                8,
-                "Tidak Ada"
-        );
-        Users angga = new Users(
-                Role.PEGAWAI,
-                "angga",
-                "12312313",
-                "",
-                "08213131313213",
-                "12345678",
-                "angga",
-                "1",
-                "IT",
-                3,
-                8,
-                "Tidak Ada"
-        );
-
-        users.add(ilham);
-        users.add(angga);
-
-
         adapterListUser = new AdapterListUser(this,users,callbackOnTap);
         rcv_users.setAdapter(adapterListUser);
+
+        UsersRepository usersRepository = new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        usersRepository.documentCollection().orderBy("timeStamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w("Listen Firebase", "Listen failed.", e);
+                    return;
+                }
+
+                List<Users> listUsers = new ArrayList<>();
+                for (QueryDocumentSnapshot doc : value) {
+
+                    Users user = doc.toObject(Users.class);
+                    listUsers.add(user);
+                }
+                users.clear();
+                users.addAll(listUsers);
+                adapterListUser.notifyDataSetChanged();
+                Log.d("Listen Firebase", " " + listUsers.size());
+            }
+        });
+
+
+
+
 
 
 

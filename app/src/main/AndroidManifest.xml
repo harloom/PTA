@@ -2,16 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.coverteam.pta">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="PTA APP"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".views.validasi.atasan.ValidasiByAtasanView"
+            android:exported="true" />
         <activity
             android:name=".views.from_cuti.CalenderPicker"
             android:exported="true" />
@@ -22,11 +26,11 @@
             android:name=".views.created_users.UsersCreateActivity"
             android:exported="true" />
         <activity android:name=".l_agenda" />
-        <activity android:name=".k_list_valid" />
-        <activity android:name=".j_validasi" />
-        <activity android:name=".i_list_riwayat_cuti" />
+        <activity android:name=".views.validasi.admin.ValidasiByAdminView" />
+        <activity android:name=".views.validasi.admin.DetailValidasiByAdminView" />
+        <activity android:name=".views.riwayat_cuti.RiwayatCutiView" />
         <activity android:name=".h_panduan" />
-        <activity android:name=".g_pengajuan_terkirim" />
+        <activity android:name=".views.riwayat_cuti.DetailPengajuanView" />
         <activity android:name=".f_profil" />
         <activity android:name=".views.from_cuti.FromCutiView" />
         <activity android:name=".d_menuUtama" />
@@ -39,6 +43,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".printer.PdfViewerExampleActivity"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/PDFTheme.TransparentStatusBar"
+            />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

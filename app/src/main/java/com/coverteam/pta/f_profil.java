@@ -13,6 +13,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.coverteam.pta.data.models.Role;
+import com.coverteam.pta.data.models.Users;
+import com.coverteam.pta.data.providers.FirestoreCollectionName;
+import com.coverteam.pta.data.repositorys.UsersRepository;
+import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -67,38 +74,78 @@ public class f_profil extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void getInformationFromDB() {
-        reference = FirebaseDatabase.getInstance().getReference()
-                .child("pegawai2").child(username_key_new);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        UsersRepository usersRepository =  new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        usersRepository.get(username_key_new).addOnCompleteListener(new OnCompleteListener<Users>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                namaprofil.setText(dataSnapshot.child("NAMA").getValue().toString());
-                nipprofil.setText(dataSnapshot.child("NIP").getValue().toString());
-                in_nama.setText(dataSnapshot.child("NAMA").getValue().toString());
-                in_nip.setText(dataSnapshot.child("NIP").getValue().toString());
-                in_jabatan.setText(dataSnapshot.child("JABATAN").getValue().toString());
-                in_sisa.setText(dataSnapshot.child("SISA_CUTI").getValue().toString());
-                Picasso.with(f_profil.this)
-                        .load(dataSnapshot.child("FOTO").getValue().toString())
-                        .into(fotouser, new Callback() {
-                            @Override
-                            public void onSuccess() {
-                                progressBar0.setVisibility(View.GONE);
-                            }
+            public void onComplete(@NonNull Task<Users> task) {
+                if(task.isSuccessful()){
+                    Users localUsers =  task.getResult();
 
-                            @Override
-                            public void onError() {
-                                Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                progressBar.setVisibility(View.GONE);
-            }
+                    //visible validasi from if role admin
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    namaprofil.setText(localUsers.getNama());
+                    nipprofil.setText(localUsers.getNip());
+                    in_nama.setText(localUsers.getNama());
+                    in_nip.setText(localUsers.getNip());
+                    in_jabatan.setText(localUsers.getJabatan());
+                    in_sisa.setText(localUsers.getJumlahMaximalCutiPertahun().toString());
 
+                    Picasso.with(f_profil.this)
+                            .load(localUsers.getFoto())
+                            .into(fotouser, new Callback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError() {
+                                    progressBar0.setVisibility(View.GONE);
+                                    Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    progressBar0.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
+                }else{
+                    //if error
+                    goLogout();
+                }
             }
         });
+
+//        reference = FirebaseDatabase.getInstance().getReference()
+//                .child("pegawai2").child(username_key_new);
+//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                namaprofil.setText(dataSnapshot.child("NAMA").getValue().toString());
+//                nipprofil.setText(dataSnapshot.child("NIP").getValue().toString());
+//                in_nama.setText(dataSnapshot.child("NAMA").getValue().toString());
+//                in_nip.setText(dataSnapshot.child("NIP").getValue().toString());
+//                in_jabatan.setText(dataSnapshot.child("JABATAN").getValue().toString());
+//                in_sisa.setText(dataSnapshot.child("SISA_CUTI").getValue().toString());
+//                Picasso.with(f_profil.this)
+//                        .load(dataSnapshot.child("FOTO").getValue().toString())
+//                        .into(fotouser, new Callback() {
+//                            @Override
+//                            public void onSuccess() {
+//                                progressBar0.setVisibility(View.GONE);
+//                            }
+//
+//                            @Override
+//                            public void onError() {
+//                                Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//                progressBar.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     private void goLogout(){

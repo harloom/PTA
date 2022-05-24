@@ -22,9 +22,16 @@
     <string name="input_password">Password</string>
     <string name="simpan">Simpan</string>
     <string name="pendaftaran_akun">Daftar Akun</string>
-    <string name="in_alasan">Alasan</string>
+    <string name="in_alasan">Detail Alasan</string>
     <string name="in_alamat">Alamat</string>
     <string name="pilih_tanggal_cuti">Pilih Tanggal</string>
+    <string name="penting">Penting?</string>
+    <string name="cuti_info">\"Cuti anda sisa : \"</string>
+    <string name="type_alasan">Tipe Alasan</string>
+    <string name="text_print">Print</string>
+    <string name="text_share">Bagikan</string>
+    <string name="text_generated_file_error">Generator PDF Error</string>
+    <string name="download">Download</string>
 
 
     <string-array name="bulan_mulai">

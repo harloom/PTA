@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgPrimary"
-    tools:context=".i_list_riwayat_cuti">
+    tools:context=".views.riwayat_cuti.RiwayatCutiView">
 
 
 

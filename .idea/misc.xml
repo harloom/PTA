@@ -9,27 +9,34 @@
         <entry key="..\:/2. DOKUMEN/1. SKRIPSI/3. Android Studio/backup/backNEW/APK1118/APK/app/src/main/res/layout/activity_d_menu_utama.xml" value="0.25" />
         <entry key="..\:/2. DOKUMEN/1. SKRIPSI/3. Android Studio/backup/backNEW/APK1118/APK/app/src/main/res/layout/activity_e__form_cuti.xml" value="0.22" />
         <entry key="..\:/2. DOKUMEN/1. SKRIPSI/3. Android Studio/backup/backNEW/APK1118/APK/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/Project/PTA/app/src/main/res/drawable-v24/bg_button_blue.xml" value="0.25555555555555554" />
+        <entry key="..\:/Project/PTA/app/src/main/res/drawable/ic_baseline_print_24.xml" value="0.2574074074074074" />
+        <entry key="..\:/Project/PTA/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.2574074074074074" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_a_splash.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_b_started.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_c_login.xml" value="0.21829710144927536" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_calender_picker.xml" value="0.24048913043478262" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_calender_picker.xml" value="0.264" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_d_menu_utama.xml" value="0.176" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_e__form_cuti.xml" value="0.2588297311544544" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_e_form_cuti.xml" value="0.21693840579710144" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_f_profil.xml" value="0.21829710144927536" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_g_pengajuan_terkirim.xml" value="0.6" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_g_pengajuan_terkirim.xml" value="0.245136186770428" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_h_panduan.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_i_list_riwayat_cuti.xml" value="0.21829710144927536" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_j_validasi.xml" value="0.21829710144927536" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_j_validasi.xml" value="0.34896943852167733" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_k_list_valid.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_l_agenda.xml" value="0.21829710144927536" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_main.xml" value="0.21829710144927536" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_users_create.xml" value="0.1" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_users_create.xml" value="0.2" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_users_list.xml" value="0.152" />
-        <entry key="..\:/Project/PTA/app/src/main/res/layout/desain_list_cuti.xml" value="0.21829710144927536" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/activity_validasi_by_atasan_view.xml" value="0.1956521739130435" />
+        <entry key="..\:/Project/PTA/app/src/main/res/layout/desain_list_cuti.xml" value="0.176" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/desain_list_users.xml" value="0.24048913043478262" />
         <entry key="..\:/Project/PTA/app/src/main/res/layout/desain_panduan_detail.xml" value="0.21829710144927536" />
+        <entry key="..\:/Project/PTA/app/src/main/res/menu/menu_pdf_views.xml" value="0.2557291666666667" />
         <entry key="..\:/Project/PTA/app/src/main/res/menu/menu_save.xml" value="0.13125" />
         <entry key="..\:/Project/PTA/app/src/main/res/menu/menu_users_toolbar.xml" value="0.2557291666666667" />
+        <entry key="..\:/Project/PTA/app/src/main/res/xml/file_paths.xml" value="0.13125" />
       </map>
     </option>
   </component>

@@ -3,10 +3,14 @@ package com.coverteam.pta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,9 +18,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.coverteam.pta.data.models.Role;
+import com.coverteam.pta.data.models.Users;
+import com.coverteam.pta.data.providers.FirestoreCollectionName;
+import com.coverteam.pta.data.repositorys.UsersRepository;
+import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
+import com.coverteam.pta.printer.PdfViewerExampleActivity;
+import com.coverteam.pta.tools.CustomMask;
+import com.coverteam.pta.tools.PicassoImageLoader;
 import com.coverteam.pta.views.created_users.UsersListActivity;
-import com.coverteam.pta.views.from_cuti.CalenderPicker;
 import com.coverteam.pta.views.from_cuti.FromCutiView;
+import com.coverteam.pta.views.riwayat_cuti.RiwayatCutiView;
+import com.coverteam.pta.views.validasi.admin.ValidasiByAdminView;
+import com.coverteam.pta.views.validasi.atasan.ValidasiByAtasanView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,9 +42,18 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-public class d_menuUtama extends AppCompatActivity implements View.OnClickListener{
+import org.jetbrains.annotations.NotNull;
 
-    LinearLayout lnr_validasi;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import lv.chi.photopicker.ChiliPhotoPicker;
+import lv.chi.photopicker.PhotoPickerFragment;
+
+public class d_menuUtama extends AppCompatActivity implements View.OnClickListener , PhotoPickerFragment.Callback{
+
+    LinearLayout lnr_validasi , lnr_add_user;
     TextView nama,nip,namahorizon1,namahorizon2,kethorizon1,kethorizon2;
     ProgressBar progressBar,progressbar2,progressbar3,progressBar0;
     ImageView gambarhorizon, gambarhorizon2,fotouser;
@@ -38,10 +64,25 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
     String username_key_new = "";
     String id1 = "",id2 = "";
 
+
+
+    // user data
+        private  Users users;
+
+
+//    private final SimpleStorageHelper storageHelper = new SimpleStorageHelper(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_d_menu_utama);
+//        setupSimpleStorage(savedInstanceState);
+//        permissionRequest.check();
+
+
+        //initial chilPhoto
+        ChiliPhotoPicker.INSTANCE.init(new PicassoImageLoader(),"lv.chi.sample.fileprovider");
+
         getUsernameLocal();
 
         findViewById(R.id.ikon_cuti).setOnClickListener(this);
@@ -51,6 +92,7 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
         findViewById(R.id.ikon_validasi).setOnClickListener(this);
         findViewById(R.id.agenda1).setOnClickListener(this);
         findViewById(R.id.agenda2).setOnClickListener(this);
+        findViewById(R.id.circlefoto).setOnClickListener(this);
 
         findViewById(R.id.icon_add_user).setOnClickListener(this);
 
@@ -60,7 +102,7 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
         progressbar2 = findViewById(R.id.progressbar2);
         progressbar3 = findViewById(R.id.progressbar3);
         progressBar0 = findViewById(R.id.progressbar0);
-        lnr_validasi = findViewById(R.id.ikon_validasi);
+
         namahorizon1 = findViewById(R.id.txhorizon);
         namahorizon2 = findViewById(R.id.txhorizon2);
         kethorizon1 = findViewById(R.id.txhorizonket);
@@ -69,31 +111,39 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
         gambarhorizon2 = findViewById(R.id.gambarhorizon2);
         fotouser = findViewById(R.id.fotouserhome);
 
-        if (username_key_new.equals("admin")){
-            lnr_validasi.setVisibility(View.VISIBLE);
-        }
 
-        if (username_key_new.equals("16312182")){
-            lnr_validasi.setVisibility(View.VISIBLE);
-        }
+        //validation
+        lnr_validasi = findViewById(R.id.ikon_validasi);
+        lnr_add_user = findViewById(R.id.icon_add_user);
 
-        //test
-//        ImageView imageViewTitle = findViewById(R.id.imageView4);
-//        imageViewTitle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent go = new Intent(d_menuUtama.this, CalenderPicker.class);
-//                startActivity(go);
-//            }
-//        });
+
+
+
 
 
         getInformationFromDB();
         getAgendaNew();
     }
+
+    private void pickGallery(){
+         PhotoPickerFragment photoPickerFragment = PhotoPickerFragment.
+                 Companion.newInstance(false,true,1, R.style.ChiliPhotoPicker_Dark);
+         photoPickerFragment.show(getSupportFragmentManager(),"picker");
+
+    }
+
+    @Override
+    public void onImagesPicked(@NotNull ArrayList<Uri> arrayList) {
+        Log.d("print",arrayList.toString());
+    }
+
     @SuppressLint("NonConstantResourceId")
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.circlefoto:
+                pickGallery();
+                break;
             case R.id.icon_add_user:
                 Intent goManagementUser = new Intent(d_menuUtama.this, UsersListActivity.class);
                 startActivity(goManagementUser);
@@ -112,12 +162,21 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
                 startActivity(gopanduan);
                 break;
             case R.id.ikon_riwayat:
-                Intent goriwayat = new Intent(d_menuUtama.this, i_list_riwayat_cuti.class);
+                Intent goriwayat = new Intent(d_menuUtama.this, RiwayatCutiView.class);
                 startActivity(goriwayat);
                 break;
             case R.id.ikon_validasi:
-                Intent govalidasi = new Intent(d_menuUtama.this, k_list_valid.class);
-                startActivity(govalidasi);
+
+                if(users.getRole().equals(Role.ADMIN)){
+
+                    Intent govalidasiAdmin = new Intent(d_menuUtama.this, ValidasiByAdminView.class);
+                    startActivity(govalidasiAdmin);
+                }else{
+                    Intent govalidasiAtasan = new Intent(d_menuUtama.this, ValidasiByAtasanView.class);
+                    startActivity(govalidasiAtasan);
+                }
+
+
                 break;
             case R.id.agenda1:
                 if (id1.equals("")){
@@ -143,40 +202,83 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
     }
 
     private void getInformationFromDB() {
-        reference = FirebaseDatabase.getInstance().getReference()
-                .child("pegawai2").child(username_key_new);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        UsersRepository usersRepository =  new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        usersRepository.get(username_key_new).addOnCompleteListener(new OnCompleteListener<Users>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    nama.setText(dataSnapshot.child("NAMA").getValue().toString());
-                    nip.setText(dataSnapshot.child("NIP").getValue().toString());
-                    Picasso.with(d_menuUtama.this)
-                            .load(dataSnapshot.child("FOTO").getValue().toString())
-                            .into(fotouser, new Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    progressBar0.setVisibility(View.GONE);
-                                }
+            public void onComplete(@NonNull Task<Users> task) {
+                    if(task.isSuccessful()){
+                        Users localUsers =  task.getResult();
+                        users = localUsers;
 
-                                @Override
-                                public void onError() {
-                                    Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                    progressBar.setVisibility(View.GONE);
-                }
-                catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Terjadi Kesalahan", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
+                        //visible validasi from if role admin
+                        System.out.print(localUsers.getRole());
+                        if(localUsers.getRole().equals(Role.ADMIN)){
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            lnr_add_user.setVisibility(View.VISIBLE);
+                        }
+                        lnr_validasi.setVisibility(View.VISIBLE);
 
+                        nama.setText(localUsers.getNama());
+                        nip.setText(CustomMask.formatNIP(localUsers.getNip()));
+                        Picasso.with(d_menuUtama.this)
+                                .load(localUsers.getFoto())
+                                .into(fotouser, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressBar0.setVisibility(View.GONE);
+                                        Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                        progressBar0.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
+                    }else{
+                        //if error
+                            goLogout();
+                    }
             }
         });
+//
+//        reference = FirebaseDatabase.getInstance().getReference()
+//                .child("pegawai2").child(username_key_new);
+//
+//
+//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                try {
+//                    nama.setText(dataSnapshot.child("NAMA").getValue().toString());
+//                    nip.setText(dataSnapshot.child("NIP").getValue().toString());
+//                    Picasso.with(d_menuUtama.this)
+//                            .load(dataSnapshot.child("FOTO").getValue().toString())
+//                            .into(fotouser, new Callback() {
+//                                @Override
+//                                public void onSuccess() {
+//                                    progressBar0.setVisibility(View.GONE);
+//                                }
+//
+//                                @Override
+//                                public void onError() {
+//                                    Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+//                    progressBar.setVisibility(View.GONE);
+//                }
+//                catch (Exception e){
+//                    Toast.makeText(getApplicationContext(), "Terjadi Kesalahan", Toast.LENGTH_LONG).show();
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     private void getAgendaNew() {
@@ -246,4 +348,66 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
         SharedPreferences sharedPreferences = getSharedPreferences(USERNAME_KEY, MODE_PRIVATE);
         username_key_new = sharedPreferences.getString(username_key,"");
     }
+
+    private void goLogout(){
+        SharedPreferences sharedPreferences = getSharedPreferences(USERNAME_KEY,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(username_key,null);
+        editor.apply();
+        progressBar.setVisibility(View.VISIBLE);
+        Intent gologin = new Intent(d_menuUtama.this, c_login.class);
+        gologin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(gologin);
+        finish();
+    }
+
+
+
+//    private void setupSimpleStorage(Bundle savedState) {
+//        if (savedState != null) {
+//            storageHelper.onRestoreInstanceState(savedState);
+//        }
+//
+//
+//        storageHelper.setOnStorageAccessGranted((requestCode, root) -> {
+//            String absolutePath = DocumentFileUtils.getAbsolutePath(root, getBaseContext());
+//            Toast.makeText(
+//                    getBaseContext(),
+//                    getString(R.string.ss_selecting_root_path_success_without_open_folder_picker, absolutePath),
+//                    Toast.LENGTH_SHORT
+//            ).show();
+//            return null;
+//        });
+//        storageHelper.setOnFileSelected((requestCode, files) -> {
+//            String message = "File selected: " + DocumentFileUtils.getFullName(files.get(0));
+//            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
+//            return null;
+//        });
+//        storageHelper.setOnFolderSelected((requestCode, folder) -> {
+//            String message = "Folder selected: " + DocumentFileUtils.getAbsolutePath(folder, getBaseContext());
+//            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
+//            return null;
+//        });
+//        storageHelper.setOnFileCreated((requestCode, file) -> {
+//            String message = "File created: " + file.getName();
+//            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
+//            return null;
+//        });
+//    }
+//
+//    private final ActivityPermissionRequest permissionRequest = new ActivityPermissionRequest.Builder(this)
+//            .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+//            .withCallback(new PermissionCallback() {
+//                @Override
+//                public void onPermissionsChecked(@NotNull PermissionResult result, boolean fromSystemDialog) {
+//                    String grantStatus = result.getAreAllPermissionsGranted() ? "granted" : "denied";
+//                    Toast.makeText(getBaseContext(), "Storage permissions are " + grantStatus, Toast.LENGTH_SHORT).show();
+//                }
+//
+//                @Override
+//                public void onShouldRedirectToSystemSettings(@NotNull List<PermissionReport> blockedPermissions) {
+//                    SimpleStorageHelper.redirectToSystemSettings(d_menuUtama.this);
+//                }
+//            })
+//            .build();
 }

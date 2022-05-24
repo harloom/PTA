@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuPrintPdf"
+        android:icon="@drawable/ic_baseline_print_24"
+        android:title="@string/text_print"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menuSharePdf"
+        android:icon="@drawable/ic_baseline_share_24"
+        android:title="@string/text_share"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuDownload"
+        android:icon="@drawable/ic_baseline_cloud_download_24"
+        android:title="@string/download"
+        app:showAsAction="ifRoom" />
+</menu>

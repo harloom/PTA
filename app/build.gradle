@@ -56,5 +56,18 @@ dependencies {
 
     implementation "com.savvi.datepicker:rangepicker:1.3.0"
 
+    implementation "com.github.Gkemon:Easy-Android-Loading:1.2"
+
+
+    implementation "com.github.ChiliLabs:ChiliPhotoPicker:0.3.1"
+
+     //maskfromat lib
+    implementation "com.azimolabs.maskformatter:maskformatter:0.2"
+
+    // printer
+    implementation 'com.github.tejpratap46:PDFCreatorAndroid:3.0.2'
+
+//    implementation "com.anggrayudi:storage:1.3.0"
+
 //    implementation 'com.github.Gkemon:Easy-Android-Loading:1.1'
 }
