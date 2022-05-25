@@ -45,16 +45,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Source;
+import com.google.firebase.firestore.Transaction;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -74,6 +77,9 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
     private ArrayList<String> listDateString = new ArrayList<>();
 
     private DocumentCuti documentCuti;
+    private  Users usr;
+    private  Users dataPejabat;
+    private  Users dataAtasan;
 
     TextView txsisacuti,in_nama,in_nip,in_jabatan,in_alasan,in_alamat,in_nohp,in_tgl_mulai,in_tgl_selesai;
 
@@ -83,7 +89,6 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
     ProgressBar progressBar;
     Button download;
 
-    String tolakalasan,downloadfile;
     private String TAG = "DetailPengajuan";
 
     @Override
@@ -133,7 +138,11 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
                 startActivity(home);
                 break;
             case R.id.download:
-                new DocumentPrint().print(DetailPengajuanView.this);
+                DocumentPrint documentPrint = new DocumentPrint(documentCuti);
+                documentPrint.setDataPengaju(usr);
+                documentPrint.setDataAtasan(dataAtasan);
+                documentPrint.setDataPejabat(dataPejabat);
+                documentPrint.print(DetailPengajuanView.this);
                 break;
         }
     }
@@ -189,7 +198,7 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
             @Override
             public void onComplete(@NonNull Task<Users> task) {
                 if(task.isSuccessful()){
-                    Users usr =  task.getResult();
+                    usr =  task.getResult();
                     txsisacuti.setText(usr.getJumlahMaximalCutiPertahun().toString());
                     in_jabatan.setText(Objects.requireNonNull(usr.getJabatan()));
                 }else{
@@ -198,7 +207,40 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
             }
         });
 
+    }
+    private  void getAtasanAndPejabat(String nipAtasan , String nipPejabat){
 
+        DocumentReference pejabatRef = new UsersRepositoryImp(Users.class,FirestoreCollectionName.USERS).documentCollection().document(nipPejabat);
+        DocumentReference atasanRef = new UsersRepositoryImp(Users.class,FirestoreCollectionName.USERS).documentCollection().document(nipAtasan);
+
+        UsersRepositoryImp usersRepository =  new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        usersRepository.getDb().runTransaction(new Transaction.Function<Void>() {
+            @Override
+            public Void apply(Transaction transaction) throws FirebaseFirestoreException {
+                DocumentSnapshot snapshotAtasan = transaction.get(atasanRef);
+                DocumentSnapshot snapshotPejabat = transaction.get(pejabatRef);
+
+                // check null
+                dataPejabat = snapshotPejabat.toObject(Users.class);
+                dataAtasan = snapshotAtasan.toObject(Users.class);
+                System.out.println(dataAtasan.toString());
+                System.out.println(dataPejabat.toString());
+                // Success
+                return null;
+            }
+
+
+        }).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        System.out.println("get pejabat and atasan Successfull");
+//                        System.out.println(task.getResult().toString());
+                    }else{
+                        System.out.println("get pejabat and atasan gagal");
+                    }
+            }
+        });
     }
 
 
@@ -207,6 +249,7 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
         DocumentCutiRepository documentCutiRepository = new DocumentCutiRepositoryImp(
                 FirestoreCollectionName.DOCUMENT_CUTI
         );
+
 
 
         documentCutiRepository.documentCollection().document(idcuti)
@@ -229,6 +272,7 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
                             in_nohp.setText(Objects.requireNonNull(documentCuti.getNoHp()));
                             in_type_alasan.setText(documentCuti.getTypeAlasan());
                             pentingVaribale.setText(documentCuti.getUrgent() ? "Penting" : "");
+
 
                             // format date
                             SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
@@ -281,15 +325,22 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
                             }
 
 
-                            if((documentCuti.getValidasiKepagawaian() != null &&
-                                documentCuti.getValidasiAtasan() !=null && documentCuti.getValidasiPejabat() != null)
-                                &&(documentCuti.getValidasiKepagawaian().equals(DocumentCuti.TERIMA) &&
-                                    documentCuti.getValidasiAtasan().equals(DocumentCuti.TERIMA) &&
-                                    documentCuti.getValidasiPejabat().equals(DocumentCuti.TERIMA))
-                            ){
-                                download.setVisibility(View.VISIBLE);
-                            }else{
-                                download.setVisibility(View.GONE);
+//                            if((documentCuti.getValidasiKepagawaian() != null &&
+//                                documentCuti.getValidasiAtasan() !=null && documentCuti.getValidasiPejabat() != null)
+//                                &&(documentCuti.getValidasiKepagawaian().equals(DocumentCuti.TERIMA) &&
+//                                    documentCuti.getValidasiAtasan().equals(DocumentCuti.TERIMA) &&
+//                                    documentCuti.getValidasiPejabat().equals(DocumentCuti.TERIMA))
+//                            ){
+//                                download.setVisibility(View.VISIBLE);
+//                            }else{
+//                                download.setVisibility(View.GONE);
+//                            }
+
+
+                            //data atasan
+                            if(documentCuti.getValidasiNipAtasan() !=null && documentCuti.getValidasiPejabat() !=null){
+                                getAtasanAndPejabat(documentCuti.getValidasiNipAtasan(),documentCuti.getValidasiNipPejabat());
+
                             }
 
                         } else {

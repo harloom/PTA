@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.coverteam.pta.R;
 import com.coverteam.pta.d_menuUtama;
 import com.coverteam.pta.data.models.DocumentCuti;
+import com.coverteam.pta.data.models.Role;
 import com.coverteam.pta.data.models.Users;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
 import com.coverteam.pta.data.repositorys.DocumentCutiRepository;
@@ -31,9 +33,12 @@ import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
 import com.coverteam.pta.tools.HelperSize;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,13 +47,18 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class DetailValidasiByAdminView extends AppCompatActivity implements View.OnClickListener {
-
+    // array atasan
+    private ArrayList<Users> listUsersAtasan = new ArrayList<>();
+    // array atasan
+    private ArrayList<Users> listUsersPejabat = new ArrayList<>();
+    private TextInputLayout tl_atasan;
+    private TextInputLayout tl_pejabat;
     private static final String TAG = "DetailValidasiByAdminView";
     String idcuti, statuscuti, alasantolakstring, username;
     TextView in_nama, in_nip, in_jabatan, in_alasan, sisa_cuti, in_alamat, in_hp;
     TextView statuspegawai, statusatasan, statuspejabat, txalasantolak;
     LinearLayout laypegawaiacc, layatasan, layatasanacc, laypejabat, laypejabatacc, laypenolakan;
-
+    LinearLayout laypegawai;
     EditText alasantolak;
 
     Button kirim;
@@ -61,15 +71,35 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
     private ArrayList<String> listDateString = new ArrayList<>();
 
     private DocumentCuti documentCuti;
-    private Users user;
+    private Users userLogin;
+    private Users userDoc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_j_validasi);
 
+        layatasan = findViewById(R.id.layatasan);
+        laypejabat = findViewById(R.id.laypejabat);
+        laypegawai = findViewById(R.id.laypegawai);
+
         Intent intent = getIntent();
         idcuti = intent.getStringExtra("cutiid");
+        String role = intent.getStringExtra("role");
+
+        if (role.equals(Role.ADMIN)) {
+            laypejabat.setVisibility(View.VISIBLE);
+            layatasan.setVisibility(View.VISIBLE);
+            laypegawai.setVisibility(View.VISIBLE);
+        } else if (role.equals(Role.PEJABAT)) {
+            laypejabat.setVisibility(View.VISIBLE);
+            layatasan.setVisibility(View.GONE);
+            laypegawai.setVisibility(View.GONE);
+        } else {
+            laypejabat.setVisibility(View.GONE);
+            layatasan.setVisibility(View.VISIBLE);
+            laypegawai.setVisibility(View.GONE);
+        }
 
         in_nama = findViewById(R.id.in_nama);
         in_nip = findViewById(R.id.in_nip);
@@ -83,14 +113,19 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         statusatasan = findViewById(R.id.txt_valid2);
         statuspejabat = findViewById(R.id.txt_valid3);
         laypegawaiacc = findViewById(R.id.laypegawaiacc);
-        layatasan = findViewById(R.id.layatasan);
+
+
         layatasanacc = findViewById(R.id.layatasanacc);
-        laypejabat = findViewById(R.id.laypejabat);
+
         laypejabatacc = findViewById(R.id.laypejabatacc);
         laypenolakan = findViewById(R.id.layalasantolak);
         alasantolak = findViewById(R.id.alasantolak);
         txalasantolak = findViewById(R.id.txalasantolak);
         kirim = findViewById(R.id.kirim);
+
+        //tl atasan and pejabat
+        tl_atasan = findViewById(R.id.input_atasan);
+        tl_pejabat = findViewById(R.id.input_pejabat);
 
 
         // listview find
@@ -118,6 +153,8 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         findViewById(R.id.kirim).setOnClickListener(this);
 
         getPengajuanCutiFromDB();
+        getUserLogin();
+        iniDataPejabat();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -156,7 +193,7 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         DocumentCutiRepository repository = new DocumentCutiRepositoryImp(FirestoreCollectionName.DOCUMENT_CUTI);
 
         documentCutiUpdate.setPenolakanMessage(alasantolak.getText().toString());
-        repository.update(documentCutiUpdate, user).addOnCompleteListener(new OnCompleteListener<Void>() {
+        repository.update(documentCutiUpdate, userDoc).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -167,27 +204,6 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
             }
         });
 
-//        reference = FirebaseDatabase.getInstance().getReference()
-//                .child("Pengajuan_Cuti").child(idcuti);
-//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                try {
-//                    dataSnapshot.getRef().child("cutiTolakAlasan").setValue(alasantolak.getText().toString());
-//                    getPengajuanCutiFromDB();
-//                    Toast.makeText(getApplicationContext(), "Alasan Penolakan Cuti Telah Diperbarui!", Toast.LENGTH_SHORT).show();
-//                }
-//                catch (Exception e){
-//                    Toast.makeText(getApplicationContext(), "Terjadi Kesalahan 3", Toast.LENGTH_LONG).show();
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
 
     private void getPengajuanCutiFromDB() {
@@ -303,15 +319,14 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
                             if (documentCuti.getValidasiPejabat() != null && documentCuti.getValidasiPejabat().equals(DocumentCuti.TOLAK)
                                     && documentCuti.getValidasiKepagawaian() != null && documentCuti.getValidasiKepagawaian().equals(DocumentCuti.TOLAK)
                                     && documentCuti.getValidasiAtasan() != null && documentCuti.getValidasiAtasan().equals(DocumentCuti.TOLAK)
-                            ){
+                            ) {
                                 findViewById(R.id.layalasantolak).setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
                                 findViewById(R.id.layalasantolak).setVisibility(View.GONE);
                             }
 
 
-
-                            getUser();
+                            getDocumentUser(documentCuti.getNipPengaju());
 
                         } else {
                             Log.d(TAG, "Current data: null");
@@ -319,109 +334,142 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
 //                        progressBar.setVisibility(View.GONE);
                     }
                 });
-//        pengajuancuti = FirebaseDatabase.getInstance().getReference()
-//                .child("Pengajuan_Cuti").child(idcuti);
-//        pengajuancuti.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                try {
-//                    in_nama.setText(Objects.requireNonNull(dataSnapshot.child("cutiNama").getValue()).toString());
-//                    in_nip.setText(Objects.requireNonNull(dataSnapshot.child("cutiNIP").getValue()).toString());
-//                    username = Objects.requireNonNull(dataSnapshot.child("cutiUsername").getValue()).toString();
-//                    in_jabatan.setText(Objects.requireNonNull(dataSnapshot.child("cutiJabatan").getValue()).toString());
-//                    in_alamat.setText(Objects.requireNonNull(dataSnapshot.child("cutiAlamat").getValue()).toString());
-//                    in_alasan.setText(Objects.requireNonNull(dataSnapshot.child("cutiAlasan").getValue()).toString());
-//                    in_hp.setText(Objects.requireNonNull(dataSnapshot.child("cutiNoHP").getValue()).toString());
-//                    in_tgl_mulai.setText(Objects.requireNonNull(dataSnapshot.child("cutiTglMulai").getValue()).toString());
-//                    in_tgl_selesai.setText(Objects.requireNonNull(dataSnapshot.child("cutiTglSelesai").getValue()).toString());
-//                    alasantolakstring = dataSnapshot.child("cutiTolakAlasan").getValue().toString();
-//                    txalasantolak.setText(Objects.requireNonNull(dataSnapshot.child("cutiTolakAlasan").getValue()).toString());
-//                    statuscuti = dataSnapshot.child("cutiStatus").getValue().toString();
-//                    if (statuscuti.equals("ditolakpegawai")){
-//                        statuspegawai.setText("DATA DI TOLAK OLEH KEPEGAWAIAN");
-//                        laypegawaiacc.setVisibility(View.GONE);
-//                        laypenolakan.setVisibility(View.VISIBLE);
-//                        if (!alasantolakstring.equals("")){
-//                            alasantolak.setVisibility(View.GONE);
-//                            kirim.setVisibility(View.GONE);
-//                        }
-//                    }
-//                    else if (statuscuti.equals("cekatasan")){
-//                        statuspegawai.setText("DATA DI TERIMA OLEH KEPEGAWAIAN");
-//                        statuspegawai.setTextColor(Color.parseColor("#5ABD8C"));
-//                        laypegawaiacc.setVisibility(View.GONE);
-//                        layatasan.setVisibility(View.VISIBLE);
-//                    }
-//                    else if (statuscuti.equals("ditolakatasan")){
-//                        statuspegawai.setText("DATA DI TERIMA OLEH KEPEGAWAIAN");
-//                        statuspegawai.setTextColor(Color.parseColor("#5ABD8C"));
-//                        statusatasan.setText("ATASAN MENOLAK PENGAJUAN CUTI");
-//                        laypegawaiacc.setVisibility(View.GONE);
-//                        layatasan.setVisibility(View.VISIBLE);
-//                        layatasanacc.setVisibility(View.GONE);
-//                        laypenolakan.setVisibility(View.VISIBLE);
-//                        if (!alasantolakstring.equals("")){
-//                            alasantolak.setVisibility(View.GONE);
-//                            kirim.setVisibility(View.GONE);
-//                        }
-//                    }
-//                    else if (statuscuti.equals("cekpejabat")){
-//                        statuspegawai.setText("DATA DI TERIMA OLEH KEPEGAWAIAN");
-//                        statuspegawai.setTextColor(Color.parseColor("#5ABD8C"));
-//                        statusatasan.setText("PENGAJUAN CUTI DI TERIMA OLEH ATASAN");
-//                        statusatasan.setTextColor(Color.parseColor("#5ABD8C"));
-//                        laypegawaiacc.setVisibility(View.GONE);
-//                        layatasan.setVisibility(View.VISIBLE);
-//                        layatasanacc.setVisibility(View.GONE);
-//                        laypejabat.setVisibility(View.VISIBLE);
-//                    }
-//                    else if (statuscuti.equals("ditolakpejabat")){
-//                        statuspegawai.setText("DATA DI TERIMA OLEH KEPEGAWAIAN");
-//                        statuspegawai.setTextColor(Color.parseColor("#5ABD8C"));
-//                        statusatasan.setText("PENGAJUAN CUTI DI TERIMA OLEH ATASAN");
-//                        statusatasan.setTextColor(Color.parseColor("#5ABD8C"));
-//                        statuspejabat.setText("PEJABAT MENOLAK PENGAJUAN CUTI");
-//                        laypegawaiacc.setVisibility(View.GONE);
-//                        layatasan.setVisibility(View.VISIBLE);
-//                        layatasanacc.setVisibility(View.GONE);
-//                        laypejabat.setVisibility(View.VISIBLE);
-//                        laypejabatacc.setVisibility(View.GONE);
-//                        laypenolakan.setVisibility(View.VISIBLE);
-//                        if (!alasantolakstring.equals("")){
-//                            alasantolak.setVisibility(View.GONE);
-//                            kirim.setVisibility(View.GONE);
-//                        }
-//                    }
-//                    else if (statuscuti.equals("allok")){
-//                        statuspegawai.setText("DATA DI TERIMA OLEH KEPEGAWAIAN");
-//                        statuspegawai.setTextColor(Color.parseColor("#5ABD8C"));
-//                        statusatasan.setText("PENGAJUAN CUTI DI TERIMA OLEH ATASAN");
-//                        statusatasan.setTextColor(Color.parseColor("#5ABD8C"));
-//                        statuspejabat.setText("PENGAJUAN CUTI DI TERIMA OLEH PEJABAT");
-//                        statuspejabat.setTextColor(Color.parseColor("#5ABD8C"));
-//                        laypegawaiacc.setVisibility(View.GONE);
-//                        layatasan.setVisibility(View.VISIBLE);
-//                        layatasanacc.setVisibility(View.GONE);
-//                        laypejabat.setVisibility(View.VISIBLE);
-//                        laypejabatacc.setVisibility(View.GONE);
-//                    }
-//                    getInformationFromDB();
-//                }
-//                catch (Exception e){
-//                    Toast.makeText(getApplicationContext(), "Terjadi Kesalahan", Toast.LENGTH_LONG).show();
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+    }
+
+    private void iniDataAtasan() {
+        //init data atasan
+        TextInputLayout inputLayoutAtasan = findViewById(R.id.input_atasan);
+        // mengambil autocomplate view
+        AutoCompleteTextView autoAtasanView = (AutoCompleteTextView) inputLayoutAtasan.getEditText();
+
+        //array intiliaze;
+        ArrayList<String> listAtasan = new ArrayList<>();
+
+        ArrayAdapter<String> atasanAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listAtasan);
+        autoAtasanView.setAdapter(atasanAdapter);
+
+
+        //query users
+        UsersRepository usersRepository = new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        usersRepository.documentCollection().get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    listUsersAtasan.clear();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("print", document.getId() + " => " + document.getData());
+                        listUsersAtasan.add(document.toObject(Users.class));
+                    }
+
+                    listAtasan.clear();
+                    ArrayList<String> localListAtasan = new ArrayList();
+                    listAtasan.add("Tidak ada atasan");
+                    for (Users u : listUsersAtasan) {
+                        localListAtasan.add(u.getNip() + "-" + u.getNama());
+                    }
+                    listAtasan.addAll(localListAtasan);
+                    atasanAdapter.notifyDataSetChanged();
+                } else {
+                    Log.d("print", "Error getting documents: ", task.getException());
+                    listAtasan.clear();
+                    listAtasan.add("Tidak ada atasan");
+                    atasanAdapter.notifyDataSetChanged();
+
+                }
+            }
+        });
+
+
+    }
+
+    private void iniDataPejabat() {
+        //init data atasan
+        TextInputLayout inputPejabat = findViewById(R.id.input_pejabat);
+        // mengambil autocomplate view
+        AutoCompleteTextView autoAtasanView = (AutoCompleteTextView) inputPejabat.getEditText();
+
+        //array intiliaze;
+        ArrayList<String> listPejabat = new ArrayList<>();
+
+        ArrayAdapter<String> pejabatAdapater = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listPejabat);
+        autoAtasanView.setAdapter(pejabatAdapater);
+
+
+        //query users
+        UsersRepository usersRepository = new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        usersRepository.documentCollection().whereEqualTo("role", Role.PEJABAT).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    listUsersPejabat.clear();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d("print_pejabat", document.getId() + " => " + document.getData());
+                        listUsersPejabat.add(document.toObject(Users.class));
+                    }
+
+                    listPejabat.clear();
+                    ArrayList<String> localListPejabat = new ArrayList();
+                    listPejabat.add("Tidak ada pejabat");
+                    for (Users u : listUsersPejabat) {
+                        Log.d("local_print", u.getNip() + " => " + u.getNama());
+                        localListPejabat.add(u.getNip() + "-" + u.getNama());
+                    }
+                    listPejabat.addAll(localListPejabat);
+                    pejabatAdapater.notifyDataSetChanged();
+
+                    if (localListPejabat.size() == 0) {
+                        tl_pejabat.getEditText().setText("Tidak ada pejabat");
+                    }
+                } else {
+                    Log.d("print_pejabat", "Error getting documents: ", task.getException());
+                    listPejabat.clear();
+                    listPejabat.add("Tidak ada atasan");
+                    pejabatAdapater.notifyDataSetChanged();
+
+                }
+            }
+        });
+
     }
 
 
-    private void getUser() {
+    private void getDocumentUser(String nipUser) {
+        UsersRepository usersRepository = new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        usersRepository.get(nipUser).addOnCompleteListener(new OnCompleteListener<Users>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<Users> task) {
+                if (task.isSuccessful()) {
+                    userDoc = task.getResult();
+                    sisa_cuti.setText(userDoc.getJumlahMaximalCutiPertahun().toString());
+                    in_jabatan.setText(Objects.requireNonNull(userDoc.getJabatan()));
+                    System.out.println("atasan : " + userDoc.getAtasan());
+
+                    if (userDoc.getAtasan().equals("Tidak Ada atasan")) {
+                        iniDataAtasan();
+                        tl_atasan.getEditText().setText("Tidak Ada atasan");
+                    } else {
+                        usersRepository.get(userDoc.getAtasan()).addOnCompleteListener(new OnCompleteListener<Users>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Users> task) {
+                                if (task.isSuccessful()) {
+                                    Users atasan = task.getResult();
+                                    tl_atasan.getEditText().setText(atasan.getNip() + "-" + atasan.getNama());
+                                }
+                            }
+                        });
+
+                    }
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "NIP tidak ditemukan", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void getUserLogin() {
         String USERNAME_KEY = "usernamekey";
         String username_key = "";
         String username_key_new = "";
@@ -433,9 +481,7 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
             @Override
             public void onComplete(@NonNull Task<Users> task) {
                 if (task.isSuccessful()) {
-                    user = task.getResult();
-                    sisa_cuti.setText(user.getJumlahMaximalCutiPertahun().toString());
-                    in_jabatan.setText(Objects.requireNonNull(user.getJabatan()));
+                    userLogin = task.getResult();
                 } else {
                     Toast.makeText(getApplicationContext(), "NIP tidak ditemukan", Toast.LENGTH_SHORT).show();
                 }
@@ -456,38 +502,78 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         if (DocumentCuti.MESSAGE_TERIMA_PEGAWAIAN.equals(status)) {
 
             documentCutiUpdate.setValidasiKepagawaian(DocumentCuti.TERIMA);
-            documentCutiUpdate.setValidasiNipKepagawaian(user.getNip());
-            updateVoid = repository.update(documentCutiUpdate, user);
+            documentCutiUpdate.setValidasiNipKepagawaian(userLogin.getNip());
+            updateVoid = repository.update(documentCutiUpdate, userLogin);
 
         } else if (DocumentCuti.MESSAGE_TOLAK_PEGAWAIAN.equals(status)) {
 
             documentCutiUpdate.setValidasiKepagawaian(DocumentCuti.TOLAK);
-            documentCutiUpdate.setValidasiNipKepagawaian(user.getNip());
-            updateVoid = repository.update(documentCutiUpdate, user);
+            documentCutiUpdate.setValidasiNipKepagawaian(userLogin.getNip());
+            updateVoid = repository.update(documentCutiUpdate, userLogin);
 
         } else if (DocumentCuti.MESSAGE_TERIMA_ATASAN.equals(status)) {
+            //setAtasan
+            if (tl_atasan.getEditText().getText().toString().equals("Tidak ada atasan")) {
+
+
+            } else {
+                String[] splitAtasan = tl_atasan.getEditText().getText().toString().split("-");
+                // manupulation getIndex
+                documentCuti.setValidasiNipAtasan(splitAtasan[0]);
+            }
+
 
             documentCutiUpdate.setValidasiAtasan(DocumentCuti.TERIMA);
 
-            documentCutiUpdate.setValidasiNipAtasan(user.getNip());
-            updateVoid = repository.update(documentCutiUpdate, user);
+            updateVoid = repository.update(documentCutiUpdate, userDoc);
 
         } else if (DocumentCuti.MESSAGE_TOLAK_ATASAN.equals(status)) {
 
             documentCutiUpdate.setValidasiAtasan(DocumentCuti.TOLAK);
-            documentCutiUpdate.setValidasiNipAtasan(user.getNip());
-            updateVoid = repository.update(documentCutiUpdate, user);
+            documentCutiUpdate.setValidasiNipAtasan(userLogin.getNip());
+
+            //setAtasan
+            if (tl_atasan.getEditText().getText().toString().equals("Tidak ada atasan")) {
+
+
+            } else {
+                String[] splitAtasan = tl_atasan.getEditText().getText().toString().split("-");
+                // manupulation getIndex
+                documentCuti.setValidasiNipAtasan(splitAtasan[0]);
+            }
+
+
+            updateVoid = repository.update(documentCutiUpdate, userDoc);
         } else if (DocumentCuti.MESSAGE_TERIMA_PEJABAT.equals(status)) {
 
+
+            //setPejabat
+            if (tl_pejabat.getEditText().getText().toString().equals("Tidak ada pejabat")) {
+                documentCuti.setValidasiNipPejabat(tl_pejabat.getEditText().getText().toString());
+
+            } else {
+                String[] splitAtasan = tl_pejabat.getEditText().getText().toString().split("-");
+                // manupulation getIndex
+                documentCuti.setValidasiNipPejabat(splitAtasan[0]);
+            }
+
+
             documentCutiUpdate.setValidasiPejabat(DocumentCuti.TERIMA);
-            documentCutiUpdate.setValidasiNipPejabat(user.getNip());
-            updateVoid = repository.update(documentCutiUpdate, user);
+
+
+            updateVoid = repository.update(documentCutiUpdate, userDoc);
 
         } else if (DocumentCuti.MESSAGE_TOLAK_PEJABAT.equals(status)) {
-
+            //setPejabat
+            if (tl_pejabat.getEditText().getText().toString().equals("Tidak ada pejabat")) {
+                documentCuti.setValidasiNipPejabat(tl_pejabat.getEditText().getText().toString());
+            } else {
+                String[] splitAtasan = tl_pejabat.getEditText().getText().toString().split("-");
+                // manupulation getIndex
+                documentCuti.setValidasiNipPejabat(splitAtasan[0]);
+            }
             documentCutiUpdate.setValidasiPejabat(DocumentCuti.TOLAK);
-            documentCutiUpdate.setValidasiNipPejabat(user.getNip());
-            updateVoid = repository.update(documentCutiUpdate, user);
+            updateVoid = repository.update(documentCutiUpdate, userDoc);
 
         } else {
             Toast.makeText(DetailValidasiByAdminView.this, "Button Tidak ditemukan", Toast.LENGTH_SHORT).show();

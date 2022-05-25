@@ -39,7 +39,7 @@ public interface UsersRepository {
      * @param entity the new entity to be stored.
      * @return A {@link Task} to be notified of failures.
      */
-    Task<Void> update(Users entity, BaseCallback callback);
+    Task<Void> update(Users entity);
 
     /**
      * Deletes an entity from the repository.

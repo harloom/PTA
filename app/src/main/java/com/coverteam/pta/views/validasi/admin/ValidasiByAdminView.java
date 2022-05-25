@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.coverteam.pta.R;
 import com.coverteam.pta.adapter.AdapterCuti;
 import com.coverteam.pta.data.models.DocumentCuti;
+import com.coverteam.pta.data.models.Role;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
 import com.coverteam.pta.data.repositorys.DocumentCutiRepository;
 import com.coverteam.pta.data.repositorys.DocumentCutiRepositoryImp;
@@ -52,6 +53,7 @@ public class ValidasiByAdminView extends AppCompatActivity {
                 DocumentCuti dataCuti = cutiList.get(position);
                 Intent intent = new Intent(getApplicationContext(), DetailValidasiByAdminView.class);
                 intent.putExtra("cutiid",dataCuti.getIdDoc());
+                intent.putExtra("role", Role.ADMIN);
                 startActivity(intent);
             }
         });
@@ -74,7 +76,7 @@ public class ValidasiByAdminView extends AppCompatActivity {
                             Log.w("Listen Firebase", "Listen failed.", e);
                             return;
                         }
-
+                        cutiList.clear();
                         Log.d("lg",value.getDocuments().toString());
 
                         List<DocumentCuti> listDoc = new ArrayList<>();

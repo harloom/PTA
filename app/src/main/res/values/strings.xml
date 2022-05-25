@@ -32,6 +32,7 @@
     <string name="text_share">Bagikan</string>
     <string name="text_generated_file_error">Generator PDF Error</string>
     <string name="download">Download</string>
+    <string name="input_pejabat">Pejabat</string>
 
 
     <string-array name="bulan_mulai">

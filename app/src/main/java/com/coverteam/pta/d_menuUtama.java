@@ -3,13 +3,11 @@ package com.coverteam.pta;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,9 +20,9 @@ import android.widget.Toast;
 import com.coverteam.pta.data.models.Role;
 import com.coverteam.pta.data.models.Users;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
+import com.coverteam.pta.data.repositorys.UploadCloudStorage;
 import com.coverteam.pta.data.repositorys.UsersRepository;
 import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
-import com.coverteam.pta.printer.PdfViewerExampleActivity;
 import com.coverteam.pta.tools.CustomMask;
 import com.coverteam.pta.tools.PicassoImageLoader;
 import com.coverteam.pta.views.created_users.UsersListActivity;
@@ -32,6 +30,7 @@ import com.coverteam.pta.views.from_cuti.FromCutiView;
 import com.coverteam.pta.views.riwayat_cuti.RiwayatCutiView;
 import com.coverteam.pta.views.validasi.admin.ValidasiByAdminView;
 import com.coverteam.pta.views.validasi.atasan.ValidasiByAtasanView;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -39,14 +38,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import lv.chi.photopicker.ChiliPhotoPicker;
 import lv.chi.photopicker.PhotoPickerFragment;
@@ -64,7 +63,7 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
     String username_key_new = "";
     String id1 = "",id2 = "";
 
-
+    TextView pgrsIndicator ;
 
     // user data
         private  Users users;
@@ -84,6 +83,8 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
         ChiliPhotoPicker.INSTANCE.init(new PicassoImageLoader(),"lv.chi.sample.fileprovider");
 
         getUsernameLocal();
+
+        pgrsIndicator = findViewById(R.id.indicator_progress);
 
         findViewById(R.id.ikon_cuti).setOnClickListener(this);
         findViewById(R.id.ikon_profil).setOnClickListener(this);
@@ -134,7 +135,59 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onImagesPicked(@NotNull ArrayList<Uri> arrayList) {
+        pgrsIndicator.setVisibility(View.VISIBLE);
         Log.d("print",arrayList.toString());
+        if(arrayList.size() >0) {
+            UploadCloudStorage cloud =    new UploadCloudStorage(users.getNip());
+            cloud.uploadImage(arrayList.get(0))
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                            double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+
+                            String teks = progress + "%";
+                            pgrsIndicator.setText(teks);
+                        }
+                    })
+
+                    .continueWithTask(new Continuation<UploadTask.TaskSnapshot,Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return cloud.getUserRef().getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        pgrsIndicator.setVisibility(View.GONE);
+                        Uri downloadUri = task.getResult();
+                        updateFoto(downloadUri.toString());
+                        Picasso.with(d_menuUtama.this)
+                                .load(downloadUri)
+                                .into(fotouser, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        progressBar0.setVisibility(View.GONE);
+                                        Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -168,7 +221,6 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
             case R.id.ikon_validasi:
 
                 if(users.getRole().equals(Role.ADMIN)){
-
                     Intent govalidasiAdmin = new Intent(d_menuUtama.this, ValidasiByAdminView.class);
                     startActivity(govalidasiAdmin);
                 }else{
@@ -209,10 +261,11 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
                     if(task.isSuccessful()){
                         Users localUsers =  task.getResult();
                         users = localUsers;
+                        Log.d("users", localUsers.toString());
 
                         //visible validasi from if role admin
                         System.out.print(localUsers.getRole());
-                        if(localUsers.getRole().equals(Role.ADMIN)){
+                        if(localUsers .getRole() != null && localUsers.getRole().equals(Role.ADMIN)){
 
                             lnr_add_user.setVisibility(View.VISIBLE);
                         }
@@ -242,43 +295,21 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
                     }
             }
         });
-//
-//        reference = FirebaseDatabase.getInstance().getReference()
-//                .child("pegawai2").child(username_key_new);
-//
-//
-//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                try {
-//                    nama.setText(dataSnapshot.child("NAMA").getValue().toString());
-//                    nip.setText(dataSnapshot.child("NIP").getValue().toString());
-//                    Picasso.with(d_menuUtama.this)
-//                            .load(dataSnapshot.child("FOTO").getValue().toString())
-//                            .into(fotouser, new Callback() {
-//                                @Override
-//                                public void onSuccess() {
-//                                    progressBar0.setVisibility(View.GONE);
-//                                }
-//
-//                                @Override
-//                                public void onError() {
-//                                    Toast.makeText(getApplicationContext(),"Gagal Memuat Foto",Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                    progressBar.setVisibility(View.GONE);
-//                }
-//                catch (Exception e){
-//                    Toast.makeText(getApplicationContext(), "Terjadi Kesalahan", Toast.LENGTH_LONG).show();
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
+    }
+
+    private  void updateFoto(String uri){
+        UsersRepository usersRepository =  new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        users.setFoto(uri);
+        usersRepository.update(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(d_menuUtama.this,"Update Foto",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(d_menuUtama.this,"Gagal Update Foto",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void getAgendaNew() {
@@ -363,51 +394,4 @@ public class d_menuUtama extends AppCompatActivity implements View.OnClickListen
 
 
 
-//    private void setupSimpleStorage(Bundle savedState) {
-//        if (savedState != null) {
-//            storageHelper.onRestoreInstanceState(savedState);
-//        }
-//
-//
-//        storageHelper.setOnStorageAccessGranted((requestCode, root) -> {
-//            String absolutePath = DocumentFileUtils.getAbsolutePath(root, getBaseContext());
-//            Toast.makeText(
-//                    getBaseContext(),
-//                    getString(R.string.ss_selecting_root_path_success_without_open_folder_picker, absolutePath),
-//                    Toast.LENGTH_SHORT
-//            ).show();
-//            return null;
-//        });
-//        storageHelper.setOnFileSelected((requestCode, files) -> {
-//            String message = "File selected: " + DocumentFileUtils.getFullName(files.get(0));
-//            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-//            return null;
-//        });
-//        storageHelper.setOnFolderSelected((requestCode, folder) -> {
-//            String message = "Folder selected: " + DocumentFileUtils.getAbsolutePath(folder, getBaseContext());
-//            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-//            return null;
-//        });
-//        storageHelper.setOnFileCreated((requestCode, file) -> {
-//            String message = "File created: " + file.getName();
-//            Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
-//            return null;
-//        });
-//    }
-//
-//    private final ActivityPermissionRequest permissionRequest = new ActivityPermissionRequest.Builder(this)
-//            .withPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
-//            .withCallback(new PermissionCallback() {
-//                @Override
-//                public void onPermissionsChecked(@NotNull PermissionResult result, boolean fromSystemDialog) {
-//                    String grantStatus = result.getAreAllPermissionsGranted() ? "granted" : "denied";
-//                    Toast.makeText(getBaseContext(), "Storage permissions are " + grantStatus, Toast.LENGTH_SHORT).show();
-//                }
-//
-//                @Override
-//                public void onShouldRedirectToSystemSettings(@NotNull List<PermissionReport> blockedPermissions) {
-//                    SimpleStorageHelper.redirectToSystemSettings(d_menuUtama.this);
-//                }
-//            })
-//            .build();
 }

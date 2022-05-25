@@ -479,6 +479,27 @@
                         android:textSize="12sp"
                         tools:ignore="MissingConstraints" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_atasan"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/input_atasan"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/input_max_cuti">
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <LinearLayout
                         android:id="@+id/layatasanacc"
                         android:layout_width="match_parent"
@@ -581,6 +602,26 @@
                         android:textColor="#d1206b"
                         android:textSize="12sp"
                         tools:ignore="MissingConstraints" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/input_pejabat"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/input_pejabat"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/input_max_cuti">
+
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
                         android:id="@+id/laypejabatacc"

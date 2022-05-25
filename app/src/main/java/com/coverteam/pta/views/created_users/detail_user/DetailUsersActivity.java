@@ -1,11 +1,8 @@
-package com.coverteam.pta;
+package com.coverteam.pta.views.created_users.detail_user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,39 +10,31 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.coverteam.pta.data.models.Role;
+import com.coverteam.pta.R;
 import com.coverteam.pta.data.models.Users;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
 import com.coverteam.pta.data.repositorys.UsersRepository;
 import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
+import com.coverteam.pta.f_profil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-public class f_profil extends AppCompatActivity implements View.OnClickListener {
-
-    String USERNAME_KEY = "usernamekey";
-    String username_key = "";
-    String username_key_new = "";
+public class DetailUsersActivity extends AppCompatActivity {
     ProgressBar progressBar,progressBar0;
     TextView namaprofil,nipprofil,in_nama,in_nip,in_jabatan,in_sisa;
     ImageView fotouser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_f_profil);
-
-        getUsernameLocal();
-
-        findViewById(R.id.button_logout).setOnClickListener(this);
-        findViewById(R.id.button_back).setOnClickListener(this);
+        setContentView(R.layout.activity_detail_users);
+        findViewById(R.id.button_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         namaprofil = findViewById(R.id.namaprofil);
         nipprofil = findViewById(R.id.nipprofil);
@@ -56,26 +45,19 @@ public class f_profil extends AppCompatActivity implements View.OnClickListener 
         progressBar = findViewById(R.id.progressbar);
         progressBar0 = findViewById(R.id.progressbar0);
         fotouser = findViewById(R.id.fotouser);
-        getInformationFromDB();
-    }
 
-    @SuppressLint("NonConstantResourceId")
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_logout:
-                goLogout();
-                break;
-            case R.id.button_back:
-                Intent goback = new Intent(f_profil.this, d_menuUtama.class);
-                startActivity(goback);
-                break;
+        String id = getIntent().getStringExtra("id");
+        if(id == null){
+            finish();
+        }else{
+            getInformationFromDB(id);
         }
     }
 
-    private void getInformationFromDB() {
+    private void getInformationFromDB(String id) {
 
         UsersRepository usersRepository =  new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
-        usersRepository.get(username_key_new).addOnCompleteListener(new OnCompleteListener<Users>() {
+        usersRepository.get(id).addOnCompleteListener(new OnCompleteListener<Users>() {
             @Override
             public void onComplete(@NonNull Task<Users> task) {
                 if(task.isSuccessful()){
@@ -90,7 +72,7 @@ public class f_profil extends AppCompatActivity implements View.OnClickListener 
                     in_jabatan.setText(localUsers.getJabatan());
                     in_sisa.setText(localUsers.getJumlahMaximalCutiPertahun().toString());
 
-                    Picasso.with(f_profil.this)
+                    Picasso.with(DetailUsersActivity.this)
                             .load(localUsers.getFoto())
                             .into(fotouser, new Callback() {
                                 @Override
@@ -106,29 +88,10 @@ public class f_profil extends AppCompatActivity implements View.OnClickListener 
                             });
                     progressBar0.setVisibility(View.GONE);
                     progressBar.setVisibility(View.GONE);
-                }else{
-                    //if error
-                    goLogout();
                 }
             }
         });
 
-    }
 
-    private void goLogout(){
-        SharedPreferences sharedPreferences = getSharedPreferences(USERNAME_KEY,MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(username_key,null);
-        editor.apply();
-        progressBar.setVisibility(View.VISIBLE);
-        Intent gologin = new Intent(f_profil.this, c_login.class);
-        gologin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(gologin);
-        finish();
-    }
-
-    public void getUsernameLocal(){
-        SharedPreferences sharedPreferences = getSharedPreferences(USERNAME_KEY, MODE_PRIVATE);
-        username_key_new = sharedPreferences.getString(username_key,"");
     }
 }

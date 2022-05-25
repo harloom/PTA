@@ -39,6 +39,10 @@ public class UsersRepositoryImp implements UsersRepository
         this.collectionReference = db.collection(this.collectionName);
     }
 
+    public FirebaseFirestore getDb() {
+        return db;
+    }
+
     @Override
     public CollectionReference documentCollection(){
         return this.collectionReference;
@@ -93,17 +97,12 @@ public class UsersRepositoryImp implements UsersRepository
     }
 
     @Override
-    public Task<Void> update(Users entity, BaseCallback callback) {
+    public Task<Void> update(Users entity) {
         final String documentName = entity.getNip();
         DocumentReference documentReference = collectionReference.document(documentName);
         Log.i(TAG, "Updating '" + documentName + "' in '" + collectionName + "'.");
 
-        return documentReference.set(entity).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "There was an error updating '" + documentName + "' in '" + collectionName + "'.", e);
-            }
-        });
+        return documentReference.set(entity);
     }
 
     @Override

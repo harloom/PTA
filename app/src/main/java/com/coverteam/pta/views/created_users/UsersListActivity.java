@@ -17,12 +17,15 @@ import android.view.MenuItem;
 
 
 import com.coverteam.pta.R;
+import com.coverteam.pta.d_menuUtama;
 import com.coverteam.pta.data.models.Role;
 import com.coverteam.pta.data.models.Users;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
 import com.coverteam.pta.data.repositorys.UsersRepository;
 import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
+import com.coverteam.pta.f_profil;
 import com.coverteam.pta.tools.Tools;
+import com.coverteam.pta.views.created_users.detail_user.DetailUsersActivity;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -37,13 +40,17 @@ public class UsersListActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private RecyclerView rcv_users;
-
+    ArrayList<Users> users = new ArrayList<>();
     private  AdapterListUser adapterListUser;
 
     private  IUserListOnTap callbackOnTap = new IUserListOnTap() {
         @Override
         public void onButtonOrderClick(int position) {
             Tools.println("Position : " + position);
+
+            Intent goDetail = new Intent(UsersListActivity.this, DetailUsersActivity.class);
+            goDetail.putExtra("id",users.get(position).getNip());
+            startActivity(goDetail);
         }
     } ;
 
@@ -75,7 +82,7 @@ public class UsersListActivity extends AppCompatActivity {
 
         //example list users
 
-        ArrayList<Users> users = new ArrayList<>();
+        ;
         adapterListUser = new AdapterListUser(this,users,callbackOnTap);
         rcv_users.setAdapter(adapterListUser);
 
@@ -88,6 +95,8 @@ public class UsersListActivity extends AppCompatActivity {
                     Log.w("Listen Firebase", "Listen failed.", e);
                     return;
                 }
+
+                users.clear();
 
                 List<Users> listUsers = new ArrayList<>();
                 for (QueryDocumentSnapshot doc : value) {

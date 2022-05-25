@@ -277,7 +277,7 @@ public class UsersCreateActivity extends AppCompatActivity {
 
 
             //setAtasan
-            if(tl_atasan.getEditText().getText().toString() == "Tidak ada atasan"){
+            if(tl_atasan.getEditText().getText().toString().equals("Tidak ada atasan")){
                 users.setAtasan(tl_atasan.getEditText().getText().toString());
 
             }else{

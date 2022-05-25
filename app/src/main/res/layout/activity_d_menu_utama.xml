@@ -83,6 +83,15 @@
                     android:id="@+id/fotouserhome"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+                <TextView
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:text="0%"
+                    android:layout_gravity="center"
+                    android:id="@+id/indicator_progress"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
                 <ProgressBar
                     android:id="@+id/progressbar0"
                     android:layout_width="match_parent"
@@ -307,9 +316,16 @@
                         android:gravity="center"
                         android:layout_height="wrap_content">
 
-                        <ImageView
+                        <ru.nikartm.support.ImageBadgeView
                             android:layout_width="64dp"
                             android:layout_height="64dp"
+                            app:ibv_badgeValue="0"
+                            app:ibv_badgeTextSize="12sp"
+                            app:ibv_fixedBadgeRadius="15dp"
+                            app:ibv_badgeTextStyle="bold"
+                            app:ibv_badgeTextColor="#ffffff"
+                            app:ibv_badgeColor="#00ACC1"
+                            app:ibv_badgeLimitValue="false"
                             android:src="@drawable/ikon_validasi"
                             tools:ignore="MissingConstraints" />
 
