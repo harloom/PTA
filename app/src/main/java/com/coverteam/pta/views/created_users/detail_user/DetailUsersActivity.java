@@ -15,7 +15,6 @@ import com.coverteam.pta.data.models.Users;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
 import com.coverteam.pta.data.repositorys.UsersRepository;
 import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
-import com.coverteam.pta.f_profil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Callback;

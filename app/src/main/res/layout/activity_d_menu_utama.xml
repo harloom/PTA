@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgPrimary"
-    tools:context=".d_menuUtama">
+    tools:context=".MenuUtamaActivity">
 
     <ScrollView
         android:scrollbars="none"
@@ -317,6 +317,7 @@
                         android:layout_height="wrap_content">
 
                         <ru.nikartm.support.ImageBadgeView
+                            android:id="@+id/badgeValidasi"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             app:ibv_badgeValue="0"

@@ -86,6 +86,7 @@ public class ValidasiByAdminView extends AppCompatActivity {
                         }
 
 
+
                         // check size > 0
                         if(cutiList.size() > 0){
                             cuti404.setVisibility(View.GONE);
@@ -95,7 +96,6 @@ public class ValidasiByAdminView extends AppCompatActivity {
                             cuti404.setVisibility(View.VISIBLE);
                         }
 
-                                Collections.reverse(cutiList);
                                 AdapterCuti adapterCuti = (AdapterCuti) listviewcuti.getAdapter();
                                     adapterCuti.notifyDataSetChanged();
                                 cuti404.setVisibility(View.GONE);

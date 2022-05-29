@@ -42,7 +42,7 @@ public class ASplashScreen extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent gogetstarted = new Intent(ASplashScreen.this, b_started.class);
+                    Intent gogetstarted = new Intent(ASplashScreen.this, StartedActivity.class);
                     startActivity(gogetstarted);
                     finish();
                 }
@@ -53,7 +53,7 @@ public class ASplashScreen extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent gohome = new Intent(ASplashScreen.this, d_menuUtama.class);
+                    Intent gohome = new Intent(ASplashScreen.this, MenuUtamaActivity.class);
                     startActivity(gohome);
                     finish();
                 }

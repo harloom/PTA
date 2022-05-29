@@ -33,6 +33,7 @@
     <string name="text_generated_file_error">Generator PDF Error</string>
     <string name="download">Download</string>
     <string name="input_pejabat">Pejabat</string>
+    <string name="tanda_tangan">Tanda Tangan</string>
 
 
     <string-array name="bulan_mulai">
@@ -50,5 +51,7 @@
         <item>Desember</item>
     </string-array>
 
-
+    <string name="agreement">I agree the terms and conditions.</string>
+    <string name="clear_pad">Clear Pad</string>
+    <string name="save_signature">Save Signature</string>
 </resources>

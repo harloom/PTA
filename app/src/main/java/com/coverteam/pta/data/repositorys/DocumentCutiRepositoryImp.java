@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.coverteam.pta.data.models.AlasanCuti;
 import com.coverteam.pta.data.models.DocumentCuti;
 import com.coverteam.pta.data.models.Users;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
@@ -50,7 +51,11 @@ public class DocumentCutiRepositoryImp implements DocumentCutiRepository {
         Log.i(TAG, "Creating '" + documentName + "' in '" + collectionName + "'.");
 
         DocumentReference userRefDoc = db.collection(FirestoreCollectionName.USERS).document(entity.getNipPengaju());
-        batch.update(userRefDoc, "jumlahMaximalCutiPertahun", user.getJumlahMaximalCutiPertahun() - entity.getListTgl().size());
+
+        if (entity.getTypeAlasan().equals(AlasanCuti.CUTI_TAHUNAN)) {
+            batch.update(userRefDoc, "jumlahMaximalCutiPertahun", user.getJumlahMaximalCutiPertahun() - entity.getListTgl().size());
+        }
+
 
         batch.set(documentReference, entity);
 
@@ -75,7 +80,11 @@ public class DocumentCutiRepositoryImp implements DocumentCutiRepository {
                 && entity.getValidasiKepagawaian().equals(DocumentCuti.TOLAK)
                 && entity.getValidasiAtasan().equals(DocumentCuti.TOLAK)) {
             DocumentReference userRefDoc = db.collection(FirestoreCollectionName.USERS).document(entity.getNipPengaju());
-            batch.update(userRefDoc, "jumlahMaximalCutiPertahun", users.getJumlahMaximalCutiPertahun() + entity.getListTgl().size());
+
+            if (entity.getTypeAlasan().equals(AlasanCuti.CUTI_TAHUNAN)) {
+                batch.update(userRefDoc, "jumlahMaximalCutiPertahun", users.getJumlahMaximalCutiPertahun() + entity.getListTgl().size());
+
+            }
         }
 
 

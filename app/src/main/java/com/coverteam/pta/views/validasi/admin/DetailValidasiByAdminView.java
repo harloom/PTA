@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coverteam.pta.R;
-import com.coverteam.pta.d_menuUtama;
+import com.coverteam.pta.MenuUtamaActivity;
 import com.coverteam.pta.data.models.DocumentCuti;
 import com.coverteam.pta.data.models.Role;
 import com.coverteam.pta.data.models.Users;
@@ -179,7 +179,7 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
                 changeStatus(DocumentCuti.MESSAGE_TOLAK_PEJABAT);
                 break;
             case R.id.back:
-                Intent home = new Intent(DetailValidasiByAdminView.this, d_menuUtama.class);
+                Intent home = new Intent(DetailValidasiByAdminView.this, MenuUtamaActivity.class);
                 startActivity(home);
                 break;
             case R.id.kirim:

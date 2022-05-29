@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -26,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.coverteam.pta.R;
-import com.coverteam.pta.d_menuUtama;
+import com.coverteam.pta.MenuUtamaActivity;
 import com.coverteam.pta.data.models.AlasanCuti;
 import com.coverteam.pta.data.models.DocumentCuti;
 import com.coverteam.pta.data.models.StatusDocument;
@@ -38,19 +37,11 @@ import com.coverteam.pta.data.repositorys.UsersRepository;
 import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
 import com.coverteam.pta.tools.CustomErrorText;
 import com.coverteam.pta.tools.HelperSize;
-import com.coverteam.pta.tools.Tools;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.Timestamp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.wajahatkarim3.easyvalidation.core.Validator;
@@ -59,7 +50,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -306,7 +296,7 @@ public class FromCutiView extends AppCompatActivity implements View.OnClickListe
 //                }
 //                break;
             case R.id.button_back:
-                Intent gomenu = new Intent(FromCutiView.this, d_menuUtama.class);
+                Intent gomenu = new Intent(FromCutiView.this, MenuUtamaActivity.class);
                 startActivity(gomenu);
                 break;
             case R.id.button_lanjut:

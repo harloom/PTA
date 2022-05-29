@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bgPrimary"
-    tools:context=".l_agenda">
+    tools:context=".AgendaActivity">
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

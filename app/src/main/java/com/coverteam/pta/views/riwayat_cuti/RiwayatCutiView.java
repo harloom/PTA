@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.coverteam.pta.R;
 import com.coverteam.pta.adapter.AdapterCuti;
-import com.coverteam.pta.d_menuUtama;
+import com.coverteam.pta.MenuUtamaActivity;
 import com.coverteam.pta.data.models.DocumentCuti;
 import com.coverteam.pta.data.models.Users;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
@@ -28,15 +28,11 @@ import com.coverteam.pta.data.repositorys.DocumentCutiRepository;
 import com.coverteam.pta.data.repositorys.DocumentCutiRepositoryImp;
 import com.coverteam.pta.data.repositorys.UsersRepository;
 import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
-import com.coverteam.pta.model.DataCuti;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -82,7 +78,7 @@ public class RiwayatCutiView extends AppCompatActivity{
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent gomenuutama = new Intent(RiwayatCutiView.this, d_menuUtama.class);
+                Intent gomenuutama = new Intent(RiwayatCutiView.this, MenuUtamaActivity.class);
                 startActivity(gomenuutama);
             }
         });

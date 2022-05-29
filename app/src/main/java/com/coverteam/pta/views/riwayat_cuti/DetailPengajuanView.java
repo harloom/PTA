@@ -209,22 +209,40 @@ public class DetailPengajuanView extends AppCompatActivity implements View.OnCli
 
     }
     private  void getAtasanAndPejabat(String nipAtasan , String nipPejabat){
+        DocumentReference pejabatRef = null;
+        DocumentReference atasanRef = null;
+        if(documentCuti.getValidasiNipPejabat() !=null && !documentCuti.getValidasiNipPejabat().equals("")) {
+             pejabatRef = new UsersRepositoryImp(Users.class,FirestoreCollectionName.USERS).documentCollection().document(nipPejabat);
 
-        DocumentReference pejabatRef = new UsersRepositoryImp(Users.class,FirestoreCollectionName.USERS).documentCollection().document(nipPejabat);
-        DocumentReference atasanRef = new UsersRepositoryImp(Users.class,FirestoreCollectionName.USERS).documentCollection().document(nipAtasan);
+        }
+
+
+        if(    documentCuti.getValidasiNipAtasan() !=null && !documentCuti.getValidasiNipAtasan().equals("")){
+            atasanRef = new UsersRepositoryImp(Users.class,FirestoreCollectionName.USERS).documentCollection().document(nipAtasan);
+
+        }
+
 
         UsersRepositoryImp usersRepository =  new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
+        DocumentReference finalPejabatRef = pejabatRef;
+        DocumentReference finalAtasanRef = atasanRef;
         usersRepository.getDb().runTransaction(new Transaction.Function<Void>() {
             @Override
             public Void apply(Transaction transaction) throws FirebaseFirestoreException {
-                DocumentSnapshot snapshotAtasan = transaction.get(atasanRef);
-                DocumentSnapshot snapshotPejabat = transaction.get(pejabatRef);
 
-                // check null
-                dataPejabat = snapshotPejabat.toObject(Users.class);
-                dataAtasan = snapshotAtasan.toObject(Users.class);
-                System.out.println(dataAtasan.toString());
-                System.out.println(dataPejabat.toString());
+                if(finalPejabatRef !=null){
+                    DocumentSnapshot snapshotPejabat = transaction.get(finalPejabatRef);
+
+                    // check null
+                    dataPejabat = snapshotPejabat.toObject(Users.class);
+                }
+
+                if(finalAtasanRef !=null){
+                    DocumentSnapshot snapshotAtasan = transaction.get(finalAtasanRef);
+                    dataAtasan = snapshotAtasan.toObject(Users.class);
+                }
+
+
                 // Success
                 return null;
             }

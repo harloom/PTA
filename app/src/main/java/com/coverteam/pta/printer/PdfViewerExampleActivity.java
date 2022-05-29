@@ -62,10 +62,11 @@ public class PdfViewerExampleActivity extends PDFViewerActivity {
                 boolean created = dest.mkdir();
                 System.out.println(dest + ": " + created);
             }
+            File destionation = new File(dest.getPath() + "/" + fileToDownload.getName());
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    File destionation = new File(dest.getPath() + "/" + fileToDownload.getName());
+
                     try {
                         copyFile(fileToDownload, destionation);
 
@@ -75,7 +76,7 @@ public class PdfViewerExampleActivity extends PDFViewerActivity {
                     }
                 }
             }).start();
-            Toast.makeText(this, "Selesai", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Selesai :" + destionation.getPath(), Toast.LENGTH_SHORT).show();
         } else {
             askPermission();
         }
