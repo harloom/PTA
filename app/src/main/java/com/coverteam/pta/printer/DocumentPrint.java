@@ -188,7 +188,7 @@ public class DocumentPrint {
 
 
     private  String getNipPejabat(){
-        String a = "";
+        String a = "<br><br><br>";
 
         if(this.dataPejabat != null && this.dataPejabat.getNip() !=null){
             a = CustomMask.formatNIP(this.dataPejabat.getNip());
@@ -196,6 +196,36 @@ public class DocumentPrint {
 
         return  a;
     }
+
+    private  String getSignaturePejabat(){
+        String a = "<br><br>";
+
+        if(dataPejabat !=null && dataPejabat.getSignatureSVG() != null && !dataPejabat.getSignature().equals("")){
+            a = dataPejabat.getSignatureSVG();
+        }
+        return  a;
+    }
+
+    private  String getSignatureAtasan(){
+        String a = "<br><br><br>";
+
+        if(dataAtasan != null && dataAtasan.getSignatureSVG() != null && !dataAtasan.getSignature().equals("")){
+            a = dataAtasan.getSignatureSVG();
+        }
+        return  a;
+    }
+
+    private  String getSignaturePengaju(){
+        String a = "";
+
+        if(dataPengaju !=null && dataPengaju.getSignatureSVG() != null && !dataPengaju.getSignature().equals("")){
+            a = dataPengaju.getSignatureSVG();
+        }
+        return  a;
+    }
+
+
+
 
 
     private  String template (){
@@ -309,7 +339,9 @@ public class DocumentPrint {
                 "        </tr>\n" +
                 "        <tr>\n" +
                 "            <td colspan=\"2\" style=\"width: 50.2256%; vertical-align: top; border: 1px solid rgb(0, 0, 0); text-align: right;\">\n" +
-                "                <div style=\"text-align: right;\"><span style=\"font-size: 11px;\">&nbsp;Hormat Saya, "+getNamaPengaju()+"&nbsp; </span></div><span style=\"font-size: 11px;\"><br><br></span>\n" +
+                "                <div style=\"text-align: right;\"><span style=\"font-size: 11px;\">&nbsp;Hormat Saya, "+getNamaPengaju()+"&nbsp; </span></div><span style=\"font-size: 11px;\"><br>" +
+                "" +getSignaturePengaju() +
+                "&nbsp;<br></span>\n" +
                 "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\">( &nbsp; "+getNamaPengaju()+" &nbsp; ) &nbsp; </span></div>\n" +
                 "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\">NIP: &nbsp; &nbsp; &nbsp;"+ this.dataPengaju.getNip()+" &nbsp;</span></div>\n" +
                 "            </td>\n" +
@@ -330,7 +362,7 @@ public class DocumentPrint {
                 "        <tr>\n" +
                 "            <td colspan=\"2\" style=\"width: 50%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\"><br></span></td>\n" +
                 "            <td colspan=\"2\" style=\"width: 50%; border: 1px solid rgb(0, 0, 0);\">\n" +
-                "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\"><br></span></div><br><span style=\"font-size: 11px;\"><br></span>\n" +
+                "                <div style=\"text-align: right;\"><span style=\"font-size: 11px;\">"+getSignatureAtasan() +"</span></div>" +
                 "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\">( "+getNameAtasan() +" )&nbsp; </span></div>\n" +
                 "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\">NIP: &nbsp; &nbsp; &nbsp; "+ getNipAtasan()+" &nbsp; </span><span style=\"font-size: 11px;\">&nbsp;</span></div>\n" +
                 "            </td>\n" +
@@ -347,7 +379,9 @@ public class DocumentPrint {
                 "        <tr>\n" +
                 "            <td colspan=\"2\" style=\"width: 50%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\"><br></span></td>\n" +
                 "            <td colspan=\"2\" style=\"width: 50%; border: 1px solid rgb(0, 0, 0);\">\n" +
-                "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\"><br></span></div><span style=\"font-size: 11px;\"><br><br></span>\n" +
+                "                <div style=\"text-align: right;\"><span style=\"font-size: 11px;\"> " +
+                "" +getSignaturePejabat()+
+                "</span></div>"+
                 "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\">( "+getNamePejabat()+ ")&nbsp;  </span></div>\n" +
                 "                <div data-empty=\"true\" style=\"text-align: right;\"><span style=\"font-size: 11px;\">NIP: &nbsp; "+getNipPejabat()+"&nbsp;</span></div>\n" +
                 "            </td>\n" +

@@ -44,7 +44,7 @@
             android:text="@string/agreement"
             android:textColor="@android:color/darker_gray" />
 
-        <se.warting.signatureview.views.SignaturePad
+        <se.warting.signatureview.views.CustomSignaturePad
             android:id="@+id/signature_pad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

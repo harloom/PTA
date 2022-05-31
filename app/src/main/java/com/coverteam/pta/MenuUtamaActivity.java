@@ -2,6 +2,7 @@ package com.coverteam.pta;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.coverteam.pta.data.repositorys.UsersRepository;
 import com.coverteam.pta.data.repositorys.UsersRepositoryImp;
 import com.coverteam.pta.tools.CustomMask;
 import com.coverteam.pta.tools.PicassoImageLoader;
+import com.coverteam.pta.views.DialogSignature;
 import com.coverteam.pta.views.created_users.UsersListActivity;
 import com.coverteam.pta.views.from_cuti.FromCutiView;
 import com.coverteam.pta.views.riwayat_cuti.RiwayatCutiView;
@@ -121,6 +123,8 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
 
         getInformationFromDB();
         getAgendaNew();
+
+        dateRangeFor();
     }
 
     // fungsi tombol ambil libaray
@@ -137,7 +141,7 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
         pgrsIndicator.setVisibility(View.VISIBLE);
         Log.d("print", arrayList.toString());
         if (arrayList.size() > 0) {
-            UploadCloudStorage cloud = new UploadCloudStorage(users.getNip());
+            UploadCloudStorage cloud = new UploadCloudStorage();
             cloud.uploadImage(arrayList.get(0))
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -260,6 +264,13 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
                     // assigment to variable user
                     Users localUsers = task.getResult();
                     users = localUsers;
+
+                    if(users.getSignatureSVG() == null || users.getSignatureSVG().equals("")){
+                        showDialogSiganture(users);
+                    }
+
+
+
 
                     // get badge notification
                     getBadge();
@@ -426,5 +437,12 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
         finish();
     }
 
+    private  void showDialogSiganture(Users users){
+            DialogFragment newFragment = new DialogSignature(users);
+            newFragment.show(getSupportFragmentManager(), "game");
+    }
 
+    private  void dateRangeFor(){
+
+    }
 }

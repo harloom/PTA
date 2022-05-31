@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -32,6 +33,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     TextView namaprofil,nipprofil,in_nama,in_nip,in_jabatan,in_sisa;
     ImageView fotouser;
 
+    Button buttonSignature ;
+
+    Users user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,17 +57,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         progressBar0 = findViewById(R.id.progressbar0);
         fotouser = findViewById(R.id.fotouser);
 
+
+
+
+       buttonSignature =  findViewById(R.id.button_signature);
+       buttonSignature.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+
+               Intent goSignaturePad = new Intent(ProfileActivity.this, SignatureActivity.class);
+
+               goSignaturePad.putExtra("user",user);
+               startActivity(goSignaturePad);
+           }
+       });
+
         getInformationFromDB();
-
-
-        findViewById(R.id.button_signature).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent goSignaturePad = new Intent(ProfileActivity.this, SignatureActivity.class);
-                startActivity(goSignaturePad);
-            }
-        });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -79,16 +89,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getInformationFromDB() {
-
+        buttonSignature.setEnabled(false);
         UsersRepository usersRepository =  new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
         usersRepository.get(username_key_new).addOnCompleteListener(new OnCompleteListener<Users>() {
             @Override
             public void onComplete(@NonNull Task<Users> task) {
                 if(task.isSuccessful()){
                     Users localUsers =  task.getResult();
-
+                    user = localUsers;
                     //visible validasi from if role admin
-
+                    buttonSignature.setEnabled(true);
                     namaprofil.setText(localUsers.getNama());
                     nipprofil.setText(localUsers.getNip());
                     in_nama.setText(localUsers.getNama());
