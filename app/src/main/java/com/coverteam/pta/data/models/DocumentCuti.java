@@ -30,6 +30,8 @@ public class DocumentCuti {
     private String validasiPejabat;
 
     private List<Date> listTgl;
+    private Timestamp firstDateCuti;
+    private Timestamp lastDateCuti;
 
     private String validasiNipAtasan;
     private String validasiNipKepagawaian;
@@ -105,6 +107,22 @@ public class DocumentCuti {
 
     public List<Date> getListTgl() { return listTgl; }
     public void setListTgl(List<Date> value) { this.listTgl = value; }
+
+    public Timestamp getFirstDateCuti() {
+        return firstDateCuti;
+    }
+
+    public void setFirstDateCuti(Timestamp firstDateCuti) {
+        this.firstDateCuti = firstDateCuti;
+    }
+
+    public Timestamp getLastDateCuti() {
+        return lastDateCuti;
+    }
+
+    public void setLastDateCuti(Timestamp lastDateCuti) {
+        this.lastDateCuti = lastDateCuti;
+    }
 
     public String getValidasiNipAtasan() { return validasiNipAtasan; }
     public void setValidasiNipAtasan(String value) { this.validasiNipAtasan = value; }

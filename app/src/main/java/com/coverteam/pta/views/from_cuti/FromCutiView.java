@@ -41,6 +41,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.Timestamp;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -216,6 +217,8 @@ public class FromCutiView extends AppCompatActivity implements View.OnClickListe
                 go.putExtra(URGENT_INTENT, button_switch.isChecked());
                 go.putExtra(SISA_CUTI_INTENT,nilai_sisa_cuti);
                 startActivityForResult(go,ACTIVITY_REQUEST_CODE_DATE);
+
+
     }
 
     @Override
@@ -306,20 +309,20 @@ public class FromCutiView extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void testButton(){
-
-        Toast.makeText(FromCutiView.this,"Test Butoon delay 3 second",Toast.LENGTH_SHORT).show();
-        btn_lanjut.setEnabled(false);
-        Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    btn_lanjut.setEnabled(true);
-                    Toast.makeText(FromCutiView.this,"OK",Toast.LENGTH_SHORT).show();
-                }
-            },3000);
-
-    }
+//    private void testButton(){
+//
+//        Toast.makeText(FromCutiView.this,"Test Butoon delay 3 second",Toast.LENGTH_SHORT).show();
+//        btn_lanjut.setEnabled(false);
+//        Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    btn_lanjut.setEnabled(true);
+//                    Toast.makeText(FromCutiView.this,"OK",Toast.LENGTH_SHORT).show();
+//                }
+//            },3000);
+//
+//    }
 
     private void saveCutiOnDB() {
         btn_lanjut.setEnabled(false);
@@ -412,7 +415,13 @@ public class FromCutiView extends AppCompatActivity implements View.OnClickListe
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
             documentCuti.setTahun(String.valueOf(calendar.get(Calendar.YEAR)));
-            documentCuti.setBulan(String.valueOf(calendar.get(Calendar.MONTH)));
+            documentCuti.setBulan(String.valueOf(calendar.get(Calendar.MONTH) + 1));
+
+
+            if(listDateSelected.size() > 0){
+                documentCuti.setFirstDateCuti(new Timestamp(listDateSelected.get(0)));
+                documentCuti.setLastDateCuti(new Timestamp(listDateSelected.get(listDateSelected.size() - 1)));
+            }
 
 
             // status
@@ -428,7 +437,6 @@ public class FromCutiView extends AppCompatActivity implements View.OnClickListe
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Toast.makeText(FromCutiView.this,"Success...",Toast.LENGTH_SHORT).show();
-
                         // clear all
                         clearForm();
                     }else{

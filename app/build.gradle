@@ -62,7 +62,7 @@ dependencies {
 
     implementation "com.github.ChiliLabs:ChiliPhotoPicker:0.3.1"
 
-     //maskfromat lib
+    //maskfromat lib
     implementation "com.azimolabs.maskformatter:maskformatter:0.2"
 
     // printer
