@@ -143,7 +143,7 @@ public class CalenderPicker extends AppCompatActivity {
                         map.forEach(   (k , v ) -> {
                                 try {
                                     Date dateE = dateFormatter.parse(k);
-                                    if(v >=2 ){
+                                    if(v >=10 ){
                                     listMaxDateOfCuti.add(dateE);
 
                                     }
@@ -155,7 +155,6 @@ public class CalenderPicker extends AppCompatActivity {
                         });
 
                     }
-
                     calendar.init(lastMONTH.getTime(), nextMonth.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault())) //
                             .inMode(CalendarPickerView.SelectionMode.RANGE) //
                             .withDeactivateDates(listDayOfWeek)
