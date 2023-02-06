@@ -176,6 +176,7 @@ public class DocumentCuti {
 
     public  static  String TERIMA = "TERIMA";
     public  static  String TOLAK = "TOLAK";
+    public  static  String TANGGUHKAN = "TANGGUHKAN";
 
     public  static  String colorTerima = "#5ABD8C";
     public  static  String colorTOLAK= "#d1206b";
@@ -184,14 +185,18 @@ public class DocumentCuti {
     public  static String MESSAGE_TOLAK_PEGAWAIAN = "DATA DI TOLAK OLEH KEPEGAWAIAN";
     public  static String MESSAGE_TERIMA_PEGAWAIAN = "DATA DI TERIMA OLEH KEPEGAWAIAN";
     public  static String MESSAGE_MENUNGGU_PEGAWAIAN = "DATA SEDANG DI CEK OLEH KEPEGAWAIAN";
+    public  static  String MESSAGE_TANGGUH_PEGAWAI = "DATA DI TANGGUHKAM OLEH KEPEGAWAIAN";
+
 
     public static  String MESSAGE_MENUNGGU_PERSETUJUAN = "MENUNGGU PERSETUJUAN";
 
     public  static String MESSAGE_TOLAK_ATASAN= "DATA DI TOLAK OLEH ATASAN";
     public  static String MESSAGE_TERIMA_ATASAN = "DATA DI TERIMA OLEH ATASAN";
+    public  static  String MESSAGE_TANGGUH_ATASAN = "DATA DI TANGGUHKAM OLEH ATASAN";
 
     public  static String MESSAGE_TOLAK_PEJABAT = "DATA DI TOLAK OLEH PEJABAT";
     public  static String MESSAGE_TERIMA_PEJABAT= "DATA DI TERIMA OLEH PEJABAT";
+    public  static  String MESSAGE_TANGGUH_PEJABAT= "DATA DI TANGGUHKAM OLEH PEJABAT";
 
     public String getPenolakanMessage() {
         return penolakanMessage;

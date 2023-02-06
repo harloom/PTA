@@ -225,6 +225,88 @@ public class DocumentPrint {
     }
 
 
+    private String getTerimaAtasan(){
+        String whiteSpace = "&nbsp;" ;
+        String checklish = "\t&#10004;";
+
+        DocumentCuti doc = this.documentCuti;
+
+        if(doc.getValidasiAtasan() != null &&  doc.getValidasiAtasan().equals(DocumentCuti.TERIMA)){
+            return  checklish;
+        }
+
+        return  whiteSpace;
+    }
+
+    private String getTolakAtasan(){
+        String whiteSpace = "&nbsp;" ;
+        String checklish = "\t&#10004;";
+
+
+        DocumentCuti doc = this.documentCuti;
+
+        if(doc.getValidasiAtasan() != null && !doc.getValidasiAtasan().equals(DocumentCuti.TERIMA)){
+            return  checklish;
+        }
+
+        return  whiteSpace;
+    }
+
+    private String getTangguhAtasan(){
+        String whiteSpace = "&nbsp;" ;
+        String checklish = "\t&#10004;";
+
+
+        DocumentCuti doc = this.documentCuti;
+
+        if(doc.getValidasiAtasan() != null && !doc.getValidasiAtasan().equals(DocumentCuti.TANGGUHKAN)){
+            return  checklish;
+        }
+
+        return  whiteSpace;
+    }
+
+    private String getTerimaPejabat(){
+        String whiteSpace = "&nbsp;" ;
+        String checklish = "\t&#10004;";
+
+        DocumentCuti doc = this.documentCuti;
+
+        if(doc.getValidasiPejabat() != null && doc.getValidasiPejabat().equals(DocumentCuti.TERIMA)){
+            return  checklish;
+        }
+
+        return  whiteSpace;
+    }
+
+    private String getTolakPejabat(){
+        String whiteSpace = "&nbsp;" ;
+        String checklish = "\t&#10004;";
+
+
+        DocumentCuti doc = this.documentCuti;
+
+        if(doc.getValidasiPejabat() != null && !doc.getValidasiPejabat().equals(DocumentCuti.TERIMA)){
+            return  checklish;
+        }
+
+        return  whiteSpace;
+    }
+
+    private String getTangguhkanPejabat(){
+        String whiteSpace = "&nbsp;" ;
+        String checklish = "\t&#10004;";
+
+
+        DocumentCuti doc = this.documentCuti;
+
+        if(doc.getValidasiPejabat() != null && !doc.getValidasiPejabat().equals(DocumentCuti.TANGGUHKAN)){
+            return  checklish;
+        }
+
+        return  whiteSpace;
+    }
+
 
 
 
@@ -360,6 +442,12 @@ public class DocumentPrint {
                 "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\">TIDAK DI SETUJUI</span></td>\n" +
                 "        </tr>\n" +
                 "        <tr>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\"> "+getTerimaAtasan()+"</span></td>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\"> &nbsp;</span></td>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\"> " + getTangguhAtasan() + "</span></td>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\"> "+getTolakAtasan()+"</span></td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
                 "            <td colspan=\"2\" style=\"width: 50%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\"><br></span></td>\n" +
                 "            <td colspan=\"2\" style=\"width: 50%; border: 1px solid rgb(0, 0, 0);\">\n" +
                 "                <div style=\"text-align: right;\"><span style=\"font-size: 11px;\">"+getSignatureAtasan() +"</span></div>" +
@@ -375,6 +463,12 @@ public class DocumentPrint {
                 "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\">PERUBAHAN**</span></td>\n" +
                 "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\">DI TANGGUHKAN</span></td>\n" +
                 "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\">TIDAK DI SETUJUI</span></td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\"> "+ getTerimaPejabat()+"</span></td>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\"> &nbsp;</span></td>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\">" +getTangguhkanPejabat() + "</span></td>\n" +
+                "            <td style=\"width: 25%; border: 1px solid rgb(0, 0, 0);text-align:center; vertical-align:middle';\"><span style=\"font-size: 11px;\">"+getTolakPejabat()+"</span></td>\n" +
                 "        </tr>\n" +
                 "        <tr>\n" +
                 "            <td colspan=\"2\" style=\"width: 50%; border: 1px solid rgb(0, 0, 0);\"><span style=\"font-size: 11px;\"><br></span></td>\n" +

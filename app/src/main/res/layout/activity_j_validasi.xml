@@ -377,7 +377,7 @@
                     <LinearLayout
                         android:id="@+id/laypegawaiacc"
                         android:layout_width="match_parent"
-                        android:weightSum="2"
+                        android:weightSum="3"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -392,14 +392,14 @@
                                 android:id="@+id/terima_kepegawaian"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="24dp"
+                                android:layout_marginEnd="4dp"
                                 android:background="@drawable/bg_button_blue"
                                 android:fontFamily="@font/mmedium"
                                 android:text="TERIMA"
                                 android:textColor="#fff"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -407,7 +407,32 @@
                                 tools:ignore="MissingConstraints" />
 
                         </LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content">
 
+                            <Button
+                                android:id="@+id/tangguhkan_kepegawaian"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="@drawable/bg_button_blue"
+                                android:fontFamily="@font/mmedium"
+                                android:text="Tangguhkan"
+                                android:textColor="#fff"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                                tools:ignore="MissingConstraints" />
+
+                        </LinearLayout>
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_weight="1"
@@ -419,14 +444,14 @@
                                 android:id="@+id/tolak_kepegawaian"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="24dp"
+                                android:layout_marginEnd="4dp"
                                 android:background="@drawable/bg_button_blue"
                                 android:fontFamily="@font/mmedium"
                                 android:text="TOLAK"
                                 android:textColor="#fff"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -503,7 +528,7 @@
                     <LinearLayout
                         android:id="@+id/layatasanacc"
                         android:layout_width="match_parent"
-                        android:weightSum="2"
+                        android:weightSum="3"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -518,14 +543,14 @@
                                 android:id="@+id/btn_terima_atasan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="24dp"
+                                android:layout_marginEnd="4dp"
                                 android:background="@drawable/bg_button_blue"
                                 android:fontFamily="@font/mmedium"
                                 android:text="TERIMA"
                                 android:textColor="#fff"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -533,7 +558,32 @@
                                 tools:ignore="MissingConstraints" />
 
                         </LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content">
 
+                            <Button
+                                android:id="@+id/btn_tangguhkan_atasan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="@drawable/bg_button_blue"
+                                android:fontFamily="@font/mmedium"
+                                android:text="Tangguhkan"
+                                android:textColor="#fff"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                                tools:ignore="MissingConstraints" />
+
+                        </LinearLayout>
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_weight="1"
@@ -545,14 +595,14 @@
                                 android:id="@+id/btn_tolak_atasan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="24dp"
+                                android:layout_marginEnd="4dp"
                                 android:background="@drawable/bg_button_blue"
                                 android:fontFamily="@font/mmedium"
                                 android:text="TOLAK"
                                 android:textColor="#fff"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -626,7 +676,7 @@
                     <LinearLayout
                         android:id="@+id/laypejabatacc"
                         android:layout_width="match_parent"
-                        android:weightSum="2"
+                        android:weightSum="3"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -641,14 +691,14 @@
                                 android:id="@+id/btn_terima_pejabat"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="24dp"
+                                android:layout_marginEnd="4dp"
                                 android:background="@drawable/bg_button_blue"
                                 android:fontFamily="@font/mmedium"
                                 android:text="TERIMA"
                                 android:textColor="#fff"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -656,7 +706,32 @@
                                 tools:ignore="MissingConstraints" />
 
                         </LinearLayout>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:gravity="center"
+                            android:layout_height="wrap_content">
 
+                            <Button
+                                android:id="@+id/btn_tangguhkan_pejabat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginEnd="4dp"
+                                android:background="@drawable/bg_button_blue"
+                                android:fontFamily="@font/mmedium"
+                                android:text="Tangguhkan"
+                                android:textColor="#fff"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="1.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                                tools:ignore="MissingConstraints" />
+
+                        </LinearLayout>
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_weight="1"
@@ -668,14 +743,14 @@
                                 android:id="@+id/btn_tolak_pejabat"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="24dp"
+                                android:layout_marginStart="4dp"
                                 android:layout_marginTop="15dp"
-                                android:layout_marginEnd="24dp"
+                                android:layout_marginEnd="4dp"
                                 android:background="@drawable/bg_button_blue"
                                 android:fontFamily="@font/mmedium"
                                 android:text="TOLAK"
                                 android:textColor="#fff"
-                                android:textSize="18sp"
+                                android:textSize="14sp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="1.0"
                                 app:layout_constraintStart_toStartOf="parent"

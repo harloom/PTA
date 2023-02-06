@@ -66,6 +66,8 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
     //button action
     Button trm_pegawai, tolak_pegawai, terima_atasan, tolak_atasan, terima_pejabat, tolak_pejabat;
 
+    Button tanggh_pegawai,tanggh_atasan,tanggh_pejabat;
+
 
     private ListView listViewDateSelected;
     private ArrayList<String> listDateString = new ArrayList<>();
@@ -134,8 +136,13 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         trm_pegawai = findViewById(R.id.terima_kepegawaian);
         trm_pegawai.setOnClickListener(this);
 
+
         tolak_pegawai = findViewById(R.id.tolak_kepegawaian);
         tolak_pegawai.setOnClickListener(this);
+
+//        Button tanggh_pegawai,tanggh_atasan,tanggh_pejabat;
+        tanggh_pegawai = findViewById(R.id.tangguhkan_kepegawaian);
+        tanggh_pegawai.setOnClickListener(this);
 
         terima_atasan = findViewById(R.id.btn_terima_atasan);
         terima_atasan.setOnClickListener(this);
@@ -143,11 +150,17 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         tolak_atasan = findViewById(R.id.btn_tolak_atasan);
         tolak_atasan.setOnClickListener(this);
 
+        tanggh_atasan = findViewById(R.id.btn_tangguhkan_atasan);
+        tanggh_atasan.setOnClickListener(this);
+
         terima_pejabat = findViewById(R.id.btn_terima_pejabat);
         terima_pejabat.setOnClickListener(this);
 
         tolak_pejabat = findViewById(R.id.btn_tolak_pejabat);
         tolak_pejabat.setOnClickListener(this);
+
+        tanggh_pejabat = findViewById(R.id.btn_tangguhkan_pejabat);
+        tanggh_pejabat.setOnClickListener(this);
 
         findViewById(R.id.back).setOnClickListener(this);
         findViewById(R.id.kirim).setOnClickListener(this);
@@ -166,17 +179,29 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
             case R.id.tolak_kepegawaian:
                 changeStatus(DocumentCuti.MESSAGE_TOLAK_PEGAWAIAN);
                 break;
+
+            case R.id.tangguhkan_kepegawaian:
+                changeStatus(DocumentCuti.MESSAGE_TANGGUH_PEGAWAI);
+                break;
+
             case R.id.btn_terima_atasan:
                 changeStatus(DocumentCuti.MESSAGE_TERIMA_ATASAN);
                 break;
             case R.id.btn_tolak_atasan:
                 changeStatus(DocumentCuti.MESSAGE_TOLAK_ATASAN);
                 break;
+            case R.id.btn_tangguhkan_atasan:
+                changeStatus(DocumentCuti.MESSAGE_TANGGUH_ATASAN);
+                break;
             case R.id.btn_terima_pejabat:
                 changeStatus(DocumentCuti.MESSAGE_TERIMA_PEJABAT);
                 break;
             case R.id.btn_tolak_pejabat:
                 changeStatus(DocumentCuti.MESSAGE_TOLAK_PEJABAT);
+                break;
+
+            case R.id.btn_tangguhkan_pejabat:
+                changeStatus(DocumentCuti.MESSAGE_TANGGUH_PEJABAT);
                 break;
             case R.id.back:
                 Intent home = new Intent(DetailValidasiByAdminView.this, MenuUtamaActivity.class);
@@ -254,6 +279,7 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
                             //validasi
                             if (documentCuti.getValidasiKepagawaian() != null && documentCuti.getValidasiKepagawaian().equals(DocumentCuti.TERIMA)) {
                                 trm_pegawai.setVisibility(View.GONE);
+                                tanggh_pegawai.setVisibility(View.VISIBLE);
                                 tolak_pegawai.setVisibility(View.VISIBLE);
 
                                 statuspegawai.setText(DocumentCuti.MESSAGE_TERIMA_PEGAWAIAN);
@@ -261,14 +287,21 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
                             } else if (documentCuti.getValidasiKepagawaian() != null && documentCuti.getValidasiKepagawaian().equals(DocumentCuti.TOLAK)) {
                                 trm_pegawai.setVisibility(View.VISIBLE);
                                 tolak_pegawai.setVisibility(View.GONE);
-
+                                tanggh_pegawai.setVisibility(View.VISIBLE);
 
                                 statuspegawai.setText(DocumentCuti.MESSAGE_TOLAK_PEGAWAIAN);
                                 statuspegawai.setTextColor(Color.parseColor(DocumentCuti.colorTOLAK));
-                            } else {
+                            }else if (documentCuti.getValidasiKepagawaian() != null && documentCuti.getValidasiKepagawaian().equals(DocumentCuti.TANGGUHKAN)) {
                                 trm_pegawai.setVisibility(View.VISIBLE);
                                 tolak_pegawai.setVisibility(View.VISIBLE);
+                                tanggh_pegawai.setVisibility(View.GONE);
 
+                                statuspegawai.setText(DocumentCuti.MESSAGE_TANGGUH_PEGAWAI);
+                                statuspegawai.setTextColor(Color.parseColor(DocumentCuti.colorTOLAK));
+                            }  else {
+                                trm_pegawai.setVisibility(View.VISIBLE);
+                                tolak_pegawai.setVisibility(View.VISIBLE);
+                                tanggh_pegawai.setVisibility(View.VISIBLE);
                                 statuspegawai.setText(DocumentCuti.MESSAGE_MENUNGGU_PEGAWAIAN);
                                 statuspegawai.setTextColor(Color.parseColor(DocumentCuti.colorMenunggu));
                             }
@@ -276,17 +309,25 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
                             if (documentCuti.getValidasiAtasan() != null && documentCuti.getValidasiAtasan().equals(DocumentCuti.TERIMA)) {
                                 terima_atasan.setVisibility(View.GONE);
                                 tolak_atasan.setVisibility(View.VISIBLE);
+                                tanggh_atasan.setVisibility(View.VISIBLE);
 
                                 statusatasan.setText(DocumentCuti.MESSAGE_TERIMA_ATASAN);
                                 statusatasan.setTextColor(Color.parseColor(DocumentCuti.colorTerima));
                             } else if (documentCuti.getValidasiAtasan() != null && documentCuti.getValidasiAtasan().equals(DocumentCuti.TOLAK)) {
                                 terima_atasan.setVisibility(View.VISIBLE);
                                 tolak_atasan.setVisibility(View.GONE);
-
+                                tanggh_atasan.setVisibility(View.VISIBLE);
 
                                 statusatasan.setText(DocumentCuti.MESSAGE_TOLAK_ATASAN);
                                 statusatasan.setTextColor(Color.parseColor(DocumentCuti.colorTOLAK));
-                            } else {
+                            }  else if (documentCuti.getValidasiAtasan() != null && documentCuti.getValidasiAtasan().equals(DocumentCuti.TANGGUHKAN)) {
+                                terima_atasan.setVisibility(View.VISIBLE);
+                                tolak_atasan.setVisibility(View.VISIBLE);
+                                tanggh_atasan.setVisibility(View.GONE);
+
+                                statusatasan.setText(DocumentCuti.MESSAGE_TANGGUH_ATASAN);
+                                statusatasan.setTextColor(Color.parseColor(DocumentCuti.colorTOLAK));
+                            }else {
                                 terima_atasan.setVisibility(View.VISIBLE);
                                 tolak_atasan.setVisibility(View.VISIBLE);
 
@@ -297,19 +338,27 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
                             if (documentCuti.getValidasiPejabat() != null && documentCuti.getValidasiPejabat().equals(DocumentCuti.TERIMA)) {
                                 terima_pejabat.setVisibility(View.GONE);
                                 tolak_pejabat.setVisibility(View.VISIBLE);
-
+                                tanggh_pejabat.setVisibility(View.VISIBLE);
 
                                 statuspejabat.setText(DocumentCuti.MESSAGE_TERIMA_PEJABAT);
                                 statuspejabat.setTextColor(Color.parseColor(DocumentCuti.colorTerima));
                             } else if (documentCuti.getValidasiPejabat() != null && documentCuti.getValidasiPejabat().equals(DocumentCuti.TOLAK)) {
                                 terima_pejabat.setVisibility(View.VISIBLE);
                                 tolak_pejabat.setVisibility(View.GONE);
-
+                                tanggh_pejabat.setVisibility(View.VISIBLE);
                                 statuspejabat.setText(DocumentCuti.MESSAGE_TOLAK_PEJABAT);
                                 statuspejabat.setTextColor(Color.parseColor(DocumentCuti.colorTOLAK));
+                            }else if (documentCuti.getValidasiPejabat() != null && documentCuti.getValidasiPejabat().equals(DocumentCuti.TANGGUHKAN)) {
+                                terima_pejabat.setVisibility(View.VISIBLE);
+                                tolak_pejabat.setVisibility(View.VISIBLE);
+                                tanggh_pejabat.setVisibility(View.GONE);
+
+                                statuspejabat.setText(DocumentCuti.MESSAGE_TANGGUH_PEJABAT);
+                                statusatasan.setTextColor(Color.parseColor(DocumentCuti.colorTOLAK));
                             } else {
                                 terima_pejabat.setVisibility(View.VISIBLE);
                                 tolak_pejabat.setVisibility(View.VISIBLE);
+                                tanggh_pejabat.setVisibility(View.VISIBLE);
 
                                 statuspejabat.setText(DocumentCuti.MESSAGE_MENUNGGU_PERSETUJUAN);
                                 statuspejabat.setTextColor(Color.parseColor(DocumentCuti.colorMenunggu));
@@ -506,12 +555,16 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
             updateVoid = repository.update(documentCutiUpdate, userLogin);
 
         } else if (DocumentCuti.MESSAGE_TOLAK_PEGAWAIAN.equals(status)) {
-
             documentCutiUpdate.setValidasiKepagawaian(DocumentCuti.TOLAK);
             documentCutiUpdate.setValidasiNipKepagawaian(userLogin.getNip());
             updateVoid = repository.update(documentCutiUpdate, userLogin);
 
-        } else if (DocumentCuti.MESSAGE_TERIMA_ATASAN.equals(status)) {
+        } else if(DocumentCuti.MESSAGE_TANGGUH_PEGAWAI.equals(status)){
+            documentCutiUpdate.setValidasiKepagawaian(DocumentCuti.TANGGUHKAN);
+            documentCutiUpdate.setValidasiNipKepagawaian(userLogin.getNip());
+            updateVoid = repository.update(documentCutiUpdate, userLogin);
+
+        }else if (DocumentCuti.MESSAGE_TERIMA_ATASAN.equals(status)) {
             //setAtasan
             if (tl_atasan.getEditText().getText().toString().equals("Tidak ada atasan")) {
 
@@ -544,6 +597,14 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
 
 
             updateVoid = repository.update(documentCutiUpdate, userDoc);
+        }else if(DocumentCuti.MESSAGE_TANGGUH_ATASAN.equals(status)){
+
+            String[] splitAtasan = tl_atasan.getEditText().getText().toString().split("-");
+            documentCuti.setValidasiNipAtasan(splitAtasan[0]);
+            documentCutiUpdate.setValidasiAtasan(DocumentCuti.TANGGUHKAN);
+
+            updateVoid = repository.update(documentCutiUpdate, userDoc);
+
         } else if (DocumentCuti.MESSAGE_TERIMA_PEJABAT.equals(status)) {
 
 
@@ -575,7 +636,14 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
             documentCutiUpdate.setValidasiPejabat(DocumentCuti.TOLAK);
             updateVoid = repository.update(documentCutiUpdate, userDoc);
 
-        } else {
+        }else if(DocumentCuti.MESSAGE_TANGGUH_PEJABAT.equals(status)) {
+
+            String[] splitAtasan = tl_atasan.getEditText().getText().toString().split("-");
+            documentCuti.setValidasiNipPejabat(splitAtasan[0]);
+            documentCutiUpdate.setValidasiPejabat(DocumentCuti.TANGGUHKAN);
+
+            updateVoid = repository.update(documentCutiUpdate, userDoc);
+        }else {
             Toast.makeText(DetailValidasiByAdminView.this, "Button Tidak ditemukan", Toast.LENGTH_SHORT).show();
         }
 

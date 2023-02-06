@@ -223,7 +223,7 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.ikon_validasi:
 
-                if (users.getRole().equals(Role.ADMIN)) {
+                if (users.getRole().equals(Role.KEPEGAWAIAN) || users.getRole().equals(Role.SEKETARIS)) {
                     Intent govalidasiAdmin = new Intent(MenuUtamaActivity.this, ValidasiByAdminView.class);
                     startActivity(govalidasiAdmin);
                 } else {
@@ -282,7 +282,20 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
 
                         lnr_add_user.setVisibility(View.VISIBLE);
                     }
-                    lnr_validasi.setVisibility(View.VISIBLE);
+
+
+                    if(localUsers.getRole() != null  &&
+                            (
+                                    localUsers.getRole().equals(Role.KETUA) ||
+                                    localUsers.getRole().equals(Role.WAKIL_KETUA) ||
+                                    localUsers.getRole().equals(Role.SEKETARIS) ||
+                                    localUsers.getRole().equals(Role.KEPEGAWAIAN) ||
+                                    localUsers.getRole().equals(Role.PEJABAT))){
+                        lnr_validasi.setVisibility(View.VISIBLE);
+                    }else{
+                        lnr_validasi.setVisibility(View.GONE);
+                    }
+
 
                     nama.setText(localUsers.getNama());
                     nip.setText(CustomMask.formatNIP(localUsers.getNip()));
