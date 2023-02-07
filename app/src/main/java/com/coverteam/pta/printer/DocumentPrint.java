@@ -259,7 +259,7 @@ public class DocumentPrint {
 
         DocumentCuti doc = this.documentCuti;
 
-        if(doc.getValidasiAtasan() != null && !doc.getValidasiAtasan().equals(DocumentCuti.TANGGUHKAN)){
+        if(doc.getValidasiAtasan() != null && doc.getValidasiAtasan().equals(DocumentCuti.TANGGUHKAN)){
             return  checklish;
         }
 
@@ -300,7 +300,7 @@ public class DocumentPrint {
 
         DocumentCuti doc = this.documentCuti;
 
-        if(doc.getValidasiPejabat() != null && !doc.getValidasiPejabat().equals(DocumentCuti.TANGGUHKAN)){
+        if(doc.getValidasiPejabat() != null && doc.getValidasiPejabat().equals(DocumentCuti.TANGGUHKAN)){
             return  checklish;
         }
 

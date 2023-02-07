@@ -223,7 +223,8 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.ikon_validasi:
 
-                if (users.getRole().equals(Role.KEPEGAWAIAN) || users.getRole().equals(Role.SEKETARIS)) {
+                if (users.getRole().equals(Role.KEPEGAWAIAN) || users.getRole().equals(Role.SEKETARIS ) ||
+                        users.getRole().equals(Role.KETUA) || users.getRole().equals(Role.WAKIL_KETUA) ) {
                     Intent govalidasiAdmin = new Intent(MenuUtamaActivity.this, ValidasiByAdminView.class);
                     startActivity(govalidasiAdmin);
                 } else {
