@@ -42,6 +42,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -93,13 +94,17 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
             laypejabat.setVisibility(View.VISIBLE);
             layatasan.setVisibility(View.VISIBLE);
             laypegawai.setVisibility(View.VISIBLE);
-        } else if (role.equals(Role.PEJABAT)) {
+        } else if (role.equals(Role.PEJABAT)|| role.equals(Role.WAKIL_KETUA) || role.equals(Role.KETUA)) {
             laypejabat.setVisibility(View.VISIBLE);
             layatasan.setVisibility(View.GONE);
-            laypegawai.setVisibility(View.GONE);
-        } else {
+            laypegawai.setVisibility(View.VISIBLE);
+        }else if(role.equals(Role.KEPEGAWAIAN)) {
             laypejabat.setVisibility(View.GONE);
             layatasan.setVisibility(View.VISIBLE);
+            laypegawai.setVisibility(View.VISIBLE);
+        }else {
+            laypejabat.setVisibility(View.GONE);
+            layatasan.setVisibility(View.GONE);
             laypegawai.setVisibility(View.GONE);
         }
 
@@ -120,7 +125,10 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         layatasanacc = findViewById(R.id.layatasanacc);
 
         laypejabatacc = findViewById(R.id.laypejabatacc);
+
+
         laypenolakan = findViewById(R.id.layalasantolak);
+
         alasantolak = findViewById(R.id.alasantolak);
         txalasantolak = findViewById(R.id.txalasantolak);
         kirim = findViewById(R.id.kirim);
@@ -274,6 +282,11 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
                                     android.R.layout.simple_list_item_1, android.R.id.text1, listDateString);
                             listViewDateSelected.setAdapter(adapter);
                             HelperSize.getListViewSize(listViewDateSelected);
+
+
+
+
+
 
 
                             //validasi
@@ -446,7 +459,7 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
 
         //query users
         UsersRepository usersRepository = new UsersRepositoryImp(Users.class, FirestoreCollectionName.USERS);
-        usersRepository.documentCollection().whereEqualTo("role", Role.PEJABAT).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        usersRepository.documentCollection().whereIn("role", Arrays.asList(Role.PEJABAT,Role.KETUA,Role.WAKIL_KETUA)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
