@@ -134,6 +134,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void goLogout(){
         SharedPreferences sharedPreferences = getSharedPreferences(USERNAME_KEY,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("role", null);
         editor.putString(username_key,null);
         editor.apply();
         progressBar.setVisibility(View.VISIBLE);

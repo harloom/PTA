@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                            Toast.makeText(LoginActivity.this,"NIP/Password Salah",Toast.LENGTH_LONG).show();
                            return;
                        }
-                        saveuserInformation();
+                        saveuserInformation(localUsers.getRole());
                         Intent gomenuutama = new Intent(LoginActivity.this, MenuUtamaActivity.class);
                             gomenuutama.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(gomenuutama);
@@ -133,9 +133,10 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    private void saveuserInformation() {
+    private void saveuserInformation(String role) {
         SharedPreferences sharedPreferences = getSharedPreferences(USERNAME_KEY,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("role",role);
         editor.putString(username_key,username.getText().toString());
         editor.apply();
     }

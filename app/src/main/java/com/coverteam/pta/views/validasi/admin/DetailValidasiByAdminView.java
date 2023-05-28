@@ -90,15 +90,20 @@ public class DetailValidasiByAdminView extends AppCompatActivity implements View
         idcuti = intent.getStringExtra("cutiid");
         String role = intent.getStringExtra("role");
 
+        Log.d("'Role'" , "Role :  " + role);
+
         if (role.equals(Role.ADMIN)) {
+            Log.d("'Role'" , "Admin :  " + role);
             laypejabat.setVisibility(View.VISIBLE);
             layatasan.setVisibility(View.VISIBLE);
             laypegawai.setVisibility(View.VISIBLE);
         } else if (role.equals(Role.PEJABAT)|| role.equals(Role.WAKIL_KETUA) || role.equals(Role.KETUA)) {
+            Log.d("'Role'" , "PEJabat :  " + role);
             laypejabat.setVisibility(View.VISIBLE);
             layatasan.setVisibility(View.GONE);
-            laypegawai.setVisibility(View.VISIBLE);
+            laypegawai.setVisibility(View.GONE);
         }else if(role.equals(Role.KEPEGAWAIAN)) {
+            Log.d("'Role'" , "KEPEGAWAIAN :  " + role);
             laypejabat.setVisibility(View.GONE);
             layatasan.setVisibility(View.VISIBLE);
             laypegawai.setVisibility(View.VISIBLE);
