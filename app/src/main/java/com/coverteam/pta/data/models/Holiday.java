@@ -1,21 +1,25 @@
 package com.coverteam.pta.data.models;
 
 
+import java.util.Date;
+
 public class Holiday {
-    private String tgl;
-    private String bulan;
-    private String tahun;
-    private String alasan;
+    private Date tgl;
+    private String deskripsi;
 
-    public String getTgl() { return tgl; }
-    public void setTgl(String value) { this.tgl = value; }
+    public Date getTgl() {
+        return tgl;
+    }
 
-    public String getBulan() { return bulan; }
-    public void setBulan(String value) { this.bulan = value; }
+    public void setTgl(Date tgl) {
+        this.tgl = tgl;
+    }
 
-    public String getTahun() { return tahun; }
-    public void setTahun(String value) { this.tahun = value; }
+    public String getDeskripsi() {
+        return deskripsi;
+    }
 
-    public String getAlasan() { return alasan; }
-    public void setAlasan(String value) { this.alasan = value; }
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
+    }
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.coverteam.pta.R;
 import com.coverteam.pta.data.models.DocumentCuti;
+import com.coverteam.pta.data.models.Holiday;
 import com.coverteam.pta.data.providers.FirestoreCollectionName;
 import com.coverteam.pta.data.repositorys.DocumentCutiRepository;
 import com.coverteam.pta.data.repositorys.DocumentCutiRepositoryImp;
@@ -106,9 +107,9 @@ public class CalenderPicker extends AppCompatActivity {
         ArrayList<Date> listMaxDateOfCuti = new ArrayList<>();
         ArrayList<SubTitle> listCountDateOfCuti = new ArrayList<>();
 
+
         //check if urgent get loop history data
         if(!urgent){
-
             loadingShow();
             DocumentCutiRepository documentCutiRepository =
                     new DocumentCutiRepositoryImp(FirestoreCollectionName.DOCUMENT_CUTI);
@@ -119,7 +120,6 @@ public class CalenderPicker extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if(task.isSuccessful()){
-
                         listMaxDateOfCuti.clear();
                         listCountDateOfCuti.clear();
                       List<DocumentCuti> docs =   task.getResult().toObjects(DocumentCuti.class);
@@ -155,10 +155,58 @@ public class CalenderPicker extends AppCompatActivity {
                         });
 
                     }
+
+                    DocumentCutiRepository public_repo =
+                            new DocumentCutiRepositoryImp(FirestoreCollectionName.PUBLIC_HOLIDAY);
+
+                    public_repo.documentCollection().get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                List<Holiday> holidays =   task.getResult().toObjects(Holiday.class);
+                                for(Holiday holiday : holidays){
+                                    listMaxDateOfCuti.add(holiday.getTgl());
+                                    listCountDateOfCuti.add( new SubTitle(holiday.getTgl(),holiday.getDeskripsi()));
+                                }
+
+                            }
+
+                            /// set
+                            calendar.init(lastMONTH.getTime(), nextMonth.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault())) //
+                                    .inMode(CalendarPickerView.SelectionMode.RANGE) //
+                                    .withDeactivateDates(listDayOfWeek)
+                                    .withSubTitles(listCountDateOfCuti)
+                                    .withHighlightedDates(listMaxDateOfCuti);
+
+                            calendar.scrollToDate(new Date());
+                            loadingDismiss();
+
+                        }
+                    });
+
+                }
+            });
+
+        }else{
+
+            DocumentCutiRepository public_repo =
+                    new DocumentCutiRepositoryImp(FirestoreCollectionName.PUBLIC_HOLIDAY);
+
+            public_repo.documentCollection().get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        List<Holiday> holidays =   task.getResult().toObjects(Holiday.class);
+                        for(Holiday holiday : holidays){
+                            listMaxDateOfCuti.add(holiday.getTgl());
+                        }
+
+                    }
+
+                    /// set
                     calendar.init(lastMONTH.getTime(), nextMonth.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault())) //
                             .inMode(CalendarPickerView.SelectionMode.RANGE) //
                             .withDeactivateDates(listDayOfWeek)
-                            .withSubTitles(listCountDateOfCuti)
                             .withHighlightedDates(listMaxDateOfCuti);
 
                     calendar.scrollToDate(new Date());
@@ -166,14 +214,6 @@ public class CalenderPicker extends AppCompatActivity {
                 }
             });
 
-        }else{
-            calendar.init(lastMONTH.getTime(), nextMonth.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault())) //
-                    .inMode(CalendarPickerView.SelectionMode.RANGE) //
-                    .withDeactivateDates(listDayOfWeek)
-                    .withHighlightedDates(listMaxDateOfCuti);
-
-            calendar.scrollToDate(new Date());
-            loadingDismiss();
         }
 
 

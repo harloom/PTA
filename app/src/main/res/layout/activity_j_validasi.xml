@@ -377,7 +377,7 @@
                     <LinearLayout
                         android:id="@+id/laypegawaiacc"
                         android:layout_width="match_parent"
-                        android:weightSum="3"
+                        android:weightSum="2"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -407,32 +407,32 @@
                                 tools:ignore="MissingConstraints" />
 
                         </LinearLayout>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="wrap_content">
+<!--                        <LinearLayout-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_height="wrap_content">-->
 
-                            <Button
-                                android:id="@+id/tangguhkan_kepegawaian"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginEnd="4dp"
-                                android:background="@drawable/bg_button_blue"
-                                android:fontFamily="@font/mmedium"
-                                android:text="Tangguhkan"
-                                android:textColor="#fff"
-                                android:textSize="14sp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                                tools:ignore="MissingConstraints" />
+<!--                            <Button-->
+<!--                                android:id="@+id/tangguhkan_kepegawaian"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="4dp"-->
+<!--                                android:layout_marginTop="15dp"-->
+<!--                                android:layout_marginEnd="4dp"-->
+<!--                                android:background="@drawable/bg_button_blue"-->
+<!--                                android:fontFamily="@font/mmedium"-->
+<!--                                android:text="Tangguhkan"-->
+<!--                                android:textColor="#fff"-->
+<!--                                android:textSize="14sp"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintHorizontal_bias="1.0"-->
+<!--                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"-->
+<!--                                tools:ignore="MissingConstraints" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_weight="1"
@@ -528,7 +528,7 @@
                     <LinearLayout
                         android:id="@+id/layatasanacc"
                         android:layout_width="match_parent"
-                        android:weightSum="3"
+                        android:weightSum="2"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -558,32 +558,32 @@
                                 tools:ignore="MissingConstraints" />
 
                         </LinearLayout>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="wrap_content">
+<!--                        <LinearLayout-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_height="wrap_content">-->
 
-                            <Button
-                                android:id="@+id/btn_tangguhkan_atasan"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginEnd="4dp"
-                                android:background="@drawable/bg_button_blue"
-                                android:fontFamily="@font/mmedium"
-                                android:text="Tangguhkan"
-                                android:textColor="#fff"
-                                android:textSize="14sp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                                tools:ignore="MissingConstraints" />
+<!--                            <Button-->
+<!--                                android:id="@+id/btn_tangguhkan_atasan"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="4dp"-->
+<!--                                android:layout_marginTop="15dp"-->
+<!--                                android:layout_marginEnd="4dp"-->
+<!--                                android:background="@drawable/bg_button_blue"-->
+<!--                                android:fontFamily="@font/mmedium"-->
+<!--                                android:text="Tangguhkan"-->
+<!--                                android:textColor="#fff"-->
+<!--                                android:textSize="14sp"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintHorizontal_bias="1.0"-->
+<!--                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"-->
+<!--                                tools:ignore="MissingConstraints" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_weight="1"
@@ -676,7 +676,7 @@
                     <LinearLayout
                         android:id="@+id/laypejabatacc"
                         android:layout_width="match_parent"
-                        android:weightSum="3"
+                        android:weightSum="2"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
@@ -706,32 +706,32 @@
                                 tools:ignore="MissingConstraints" />
 
                         </LinearLayout>
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:gravity="center"
-                            android:layout_height="wrap_content">
+<!--                        <LinearLayout-->
+<!--                            android:orientation="vertical"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_height="wrap_content">-->
 
-                            <Button
-                                android:id="@+id/btn_tangguhkan_pejabat"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginEnd="4dp"
-                                android:background="@drawable/bg_button_blue"
-                                android:fontFamily="@font/mmedium"
-                                android:text="Tangguhkan"
-                                android:textColor="#fff"
-                                android:textSize="14sp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintHorizontal_bias="1.0"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-                                tools:ignore="MissingConstraints" />
+<!--                            <Button-->
+<!--                                android:id="@+id/btn_tangguhkan_pejabat"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="4dp"-->
+<!--                                android:layout_marginTop="15dp"-->
+<!--                                android:layout_marginEnd="4dp"-->
+<!--                                android:background="@drawable/bg_button_blue"-->
+<!--                                android:fontFamily="@font/mmedium"-->
+<!--                                android:text="Tangguhkan"-->
+<!--                                android:textColor="#fff"-->
+<!--                                android:textSize="14sp"-->
+<!--                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                app:layout_constraintHorizontal_bias="1.0"-->
+<!--                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                app:layout_constraintTop_toBottomOf="@+id/linearLayout"-->
+<!--                                tools:ignore="MissingConstraints" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_weight="1"

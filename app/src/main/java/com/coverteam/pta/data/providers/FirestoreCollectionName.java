@@ -19,4 +19,6 @@ public class FirestoreCollectionName {
 
     public static  String TANGGAL_CUTI = "tanggal_cuti";
 
+    public static  String PUBLIC_HOLIDAY = "public_holiday";
+
 }

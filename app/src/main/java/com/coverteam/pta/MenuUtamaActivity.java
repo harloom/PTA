@@ -60,6 +60,7 @@ import ru.nikartm.support.ImageBadgeView;
 public class MenuUtamaActivity extends AppCompatActivity implements View.OnClickListener, PhotoPickerFragment.Callback {
 
     LinearLayout lnr_validasi, lnr_add_user;
+    LinearLayout lnr_ikon_cuti;
     TextView nama, nip, namahorizon1, namahorizon2, kethorizon1, kethorizon2;
     ProgressBar progressBar, progressbar2, progressbar3, progressBar0;
     ImageView gambarhorizon, gambarhorizon2, fotouser;
@@ -119,6 +120,8 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
         //validation
         lnr_validasi = findViewById(R.id.ikon_validasi);
         lnr_add_user = findViewById(R.id.icon_add_user);
+
+        lnr_ikon_cuti = findViewById(R.id.ikon_cuti);
 
 
         getInformationFromDB();
@@ -280,9 +283,14 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
                     //visible validasi from if role admin
                     System.out.print(localUsers.getRole());
                     if (localUsers.getRole() != null && localUsers.getRole().equals(Role.ADMIN)) {
-
                         lnr_add_user.setVisibility(View.VISIBLE);
                     }
+
+//                    if(localUsers.getRole() != null  && localUsers.getRole().equals(Role.KETUA)){
+//                        lnr_ikon_cuti.setVisibility(View.GONE);
+//                    }else{
+//                        lnr_ikon_cuti.setVisibility(View.VISIBLE);
+//                    }
 
 
                     if(localUsers.getRole() != null  &&
