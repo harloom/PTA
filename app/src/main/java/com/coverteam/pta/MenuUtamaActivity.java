@@ -286,11 +286,11 @@ public class MenuUtamaActivity extends AppCompatActivity implements View.OnClick
                         lnr_add_user.setVisibility(View.VISIBLE);
                     }
 
-//                    if(localUsers.getRole() != null  && localUsers.getRole().equals(Role.KETUA)){
-//                        lnr_ikon_cuti.setVisibility(View.GONE);
-//                    }else{
-//                        lnr_ikon_cuti.setVisibility(View.VISIBLE);
-//                    }
+                    if(localUsers.getRole() != null  && localUsers.getRole().equals(Role.KETUA)){
+                        lnr_ikon_cuti.setVisibility(View.GONE);
+                    }else{
+                        lnr_ikon_cuti.setVisibility(View.VISIBLE);
+                    }
 
 
                     if(localUsers.getRole() != null  &&
